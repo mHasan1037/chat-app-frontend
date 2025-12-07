@@ -1,6 +1,7 @@
 "use client"
 import React, { useRef, useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
+import { logout } from "../utils/logoutFunc";
 
 const ProfileDropdown = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -21,7 +22,7 @@ const ProfileDropdown = () => {
               <ul>
                 <li className="cursor-pointer">Profile</li>
                 <li className="cursor-pointer">Requests</li>
-                <li className="cursor-pointer">Log out</li>
+                <li className="cursor-pointer" onClick={logout}>Log out</li>
               </ul>
             </div>
         )
