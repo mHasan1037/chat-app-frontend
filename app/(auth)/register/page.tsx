@@ -23,7 +23,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen center-position px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center">Create Account</h1>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">

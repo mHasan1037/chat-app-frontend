@@ -1,0 +1,38 @@
+
+import { IFriendRequest } from "../types/friendType";
+import api from "../utils/api"
+
+export const getAllFriendLists = async () =>{
+    const res = await api.get('/friends');
+    return res.data;
+};
+
+export const getIncomingRequests = async (): Promise<IFriendRequest[]> =>{
+    const res = await api.get('/friends/requests');
+    return res.data;
+};
+
+export const acceptFriendRequest = async (requestId: string) =>{
+    const res = await api.patch(`/friends/accept/${requestId}`);
+    return res.data;
+};
+
+export const declineFriendRequest = async (requestId: string) =>{
+    const res = await api.patch(`/friends/decline/${requestId}`);
+    return res.data;
+};
+
+export const cancelFriendRequest = async (requestId: string) =>{
+    const res = await api.patch(`/friends/cancel/${requestId}`);
+    return res.data;
+}
+
+export const sendFriendRequest = async (toUserId: string) =>{
+    const res = await api.post('/friends/request', {to: toUserId});
+    return res.data;
+}
+
+export const searchUsers = async(query: string) =>{
+    const res = await api.get(`/users/search?query=${query}`);
+    return res.data;
+};
