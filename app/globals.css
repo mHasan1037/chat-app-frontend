@@ -26,3 +26,7 @@ body {
 @utility btn-primary {
   @apply bg-blue-600 hover:bg-blue-700 active:scale-95 transition text-white;
 }
+
+@utility center-position{
+  @apply flex items-center justify-center;
+}
