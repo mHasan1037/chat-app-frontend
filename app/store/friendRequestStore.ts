@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { IFriendRequest } from "../types/friendRequest";
 import { getIncomingRequests } from "../services/friendRequestService";
+import { IFriendRequest } from "../types/friendType";
 
 interface RequestState{
     requests: IFriendRequest[];
