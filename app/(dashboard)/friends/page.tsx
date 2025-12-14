@@ -1,15 +1,11 @@
 "use client";
 import RandomUsers from "@/app/components/RandomUsers";
+import { useFriendAcions } from "@/app/hooks/useFriendActions";
 import {
-  acceptFriendRequest,
-  cancelFriendRequest,
-  declineFriendRequest,
   getAllFriendLists,
   searchUsers,
-  sendFriendRequest,
 } from "@/app/services/friendRequestService";
 import {
-  FriendAction,
   IFriendType,
   IUserSearchResult,
 } from "@/app/types/friendType";
@@ -19,6 +15,10 @@ const FriendPage = () => {
   const [allFriends, setAllFriends] = useState<IFriendType[]>([]);
   const [searchResults, setSearchResults] = useState<IUserSearchResult[]>([]);
   const [query, setQuery] = useState("");
+  const { handleFriendAction } = useFriendAcions(
+    searchResults,
+    setSearchResults
+  );
 
   useEffect(() => {
     const fetchAllFriendList = async () => {
@@ -40,78 +40,6 @@ const FriendPage = () => {
 
     return () => clearTimeout(delayDebounce);
   }, [query]);
-
-  const handleFriendAction = async (action: FriendAction) => {
-    const { type, id } = action;
-    const previousState = searchResults;
-
-    try {
-      switch (type) {
-        case "ADD":
-          const res = await sendFriendRequest(id);
-          const requestId = res.request._id;
-          setSearchResults((prev) =>
-            prev.map((user) =>
-              user._id === id 
-                ? {
-                  ...user,
-                  isOutgoingRequest: true,
-                  requestId
-                }
-                : user
-            )
-          )
-          break;
-        case "ACCEPT":
-          await acceptFriendRequest(id);
-          setSearchResults((prev) =>
-             prev.map((user) =>
-               user.requestId === id
-                ? {
-                  ...user,
-                  isFriend: true,
-                  isIncomingRequest: false,
-                  isOutgoingRequest: false,
-                  requestId: null
-                }
-                : user
-            )
-          )
-          break;
-        case "DECLINE":
-          await declineFriendRequest(id);
-          setSearchResults((prev) =>
-            prev.map((user) =>
-               user.requestId === id 
-                 ? {
-                    ...user,
-                    isIncomingRequest: false,
-                    requestId: null,
-                 }
-                 : user
-            )
-          )
-          break;
-        case "CANCEL":
-          await cancelFriendRequest(id);
-          setSearchResults((prev) =>
-            prev.map((user) =>
-              user.requestId === id
-                ? {
-                  ...user,
-                  isOutgoingRequest: false,
-                  requestId: null
-                }
-                : user
-            )
-          )
-          break;
-      }
-    } catch (err) {
-      console.error(err);
-      setSearchResults(previousState);
-    }
-  };
 
   return (
     <div>
