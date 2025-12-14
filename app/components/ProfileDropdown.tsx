@@ -40,13 +40,13 @@ const ProfileDropdown = () => {
           className="absolute top-full right-0 shadow-md p-2 z-30"
           ref={dropdownRef}
         >
-          <ul>
+          <ul className="whitespace-nowrap">
             <li className="cursor-pointer">Profile</li>
             <li
-              className="cursor-pointer"
+              className="cursor-pointer flex gap-1"
               onClick={() => handlePageChange("requests")}
             >
-              Requests
+              <span>Requests</span> {requests.length !== 0 && <span className="w-5 h-5 rounded-full bg-blue-500 center-position">{requests.length}</span>}
             </li>
             <li className="cursor-pointer" onClick={logout}>
               Log out
