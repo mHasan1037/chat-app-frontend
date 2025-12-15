@@ -31,8 +31,3 @@ export const sendFriendRequest = async (toUserId: string) =>{
     const res = await api.post('/friends/request', {to: toUserId});
     return res.data;
 }
-
-export const searchUsers = async(query: string) =>{
-    const res = await api.get(`/users/search?query=${query}`);
-    return res.data;
-};

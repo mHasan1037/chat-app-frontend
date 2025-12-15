@@ -41,7 +41,7 @@ const ProfileDropdown = () => {
           ref={dropdownRef}
         >
           <ul className="whitespace-nowrap">
-            <li className="cursor-pointer">Profile</li>
+            <li className="cursor-pointer" onClick={()=> handlePageChange('/profile/me')}>Profile</li>
             <li
               className="cursor-pointer flex gap-1"
               onClick={() => handlePageChange("requests")}

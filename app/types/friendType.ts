@@ -37,6 +37,7 @@ export interface FriendAction {
 export interface RandomUsersProps {
     users: IUserSearchResult[];
     onFriendAction?: (action: FriendAction) => void;
+    onProfileVisit: (id: string) => void;
   }
 
 export interface SingleUserProps{
