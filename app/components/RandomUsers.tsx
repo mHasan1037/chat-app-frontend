@@ -3,14 +3,14 @@ import { RandomUsersProps } from '../types/friendType';
 import FriendStatusActions from './FriendStatusActions';
 
 
-const RandomUsers = ({users, onFriendAction} : RandomUsersProps) => {
+const RandomUsers = ({users, onFriendAction, onProfileVisit} : RandomUsersProps) => {
 
   return (
     <div>
       {users.map((user) =>(
         <div key={user._id}>
           <div className='flex'>
-            <p>{user.name}</p>
+            <p onClick={()=> onProfileVisit(user._id)}>{user.name}</p>
             <FriendStatusActions 
               user={user}
               onFriendAction={onFriendAction}
