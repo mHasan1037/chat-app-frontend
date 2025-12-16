@@ -44,7 +44,7 @@ const ProfileDropdown = () => {
             <li className="cursor-pointer" onClick={()=> handlePageChange('/profile/me')}>Profile</li>
             <li
               className="cursor-pointer flex gap-1"
-              onClick={() => handlePageChange("requests")}
+              onClick={() => handlePageChange("/requests")}
             >
               <span>Requests</span> {requests.length !== 0 && <span className="w-5 h-5 rounded-full bg-blue-500 center-position">{requests.length}</span>}
             </li>

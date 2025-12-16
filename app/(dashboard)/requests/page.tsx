@@ -4,10 +4,12 @@ import {
   declineFriendRequest,
 } from "@/app/services/friendRequestService";
 import { useFriendRequestStore } from "@/app/store/friendRequestStore";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const FriendRequests = () => {
   const { requests, fetchRequests } = useFriendRequestStore();
+  const router = useRouter();
   useEffect(() => {
     fetchRequests();
   }, []);
@@ -39,7 +41,7 @@ const FriendRequests = () => {
         <div>
           {requests.map((req) => (
             <div className="flex" key={req._id}>
-              <p>{req.from.name}</p>
+              <p onClick={()=> router.push(`/profile/${req.from._id}`)}>{req.from.name}</p>
               <button onClick={() => handleAcceptRequest(req._id)}>
                 Accept
               </button>
