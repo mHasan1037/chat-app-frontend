@@ -1,36 +1,16 @@
 "use client";
-import {
-  acceptFriendRequest,
-  declineFriendRequest,
-} from "@/app/services/friendRequestService";
-import { useFriendRequestStore } from "@/app/store/friendRequestStore";
+import { useFriendRequestMutations } from "@/app/hooks/useFriendRequestMutations";
+import { useFriendRequests } from "@/app/hooks/useFriendRequests";
+import { IFriendRequest } from "@/app/types/friendType";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 
 const FriendRequests = () => {
-  const { requests, fetchRequests } = useFriendRequestStore();
+  const {data: requests = [], isLoading} = useFriendRequests();
+  const {accept, decline} = useFriendRequestMutations();
   const router = useRouter();
-  useEffect(() => {
-    fetchRequests();
-  }, []);
 
-  const handleAcceptRequest = async (id: string) => {
-    try {
-      await acceptFriendRequest(id);
-      await fetchRequests();
-    } catch (err: any) {
-      console.log(err.response?.data?.message);
-    }
-  };
 
-  const handleDeclineRequest = async (id: string) => {
-    try {
-      await declineFriendRequest(id);
-      await fetchRequests();
-    } catch (err: any) {
-      console.log(err.response?.data?.message);
-    }
-  };
+  if(isLoading) return <p>Loading...</p>
 
   return (
     <div>
@@ -39,13 +19,13 @@ const FriendRequests = () => {
         <div>You have no friend requests</div>
       ) : (
         <div>
-          {requests.map((req) => (
+          {requests.map((req: IFriendRequest) => (
             <div className="flex" key={req._id}>
               <p onClick={()=> router.push(`/profile/${req.from._id}`)}>{req.from.name}</p>
-              <button onClick={() => handleAcceptRequest(req._id)}>
+              <button onClick={() => accept.mutate(req._id)}>
                 Accept
               </button>
-              <button onClick={() => handleDeclineRequest(req._id)}>
+              <button onClick={() => decline.mutate(req._id)}>
                 Decline
               </button>
             </div>
