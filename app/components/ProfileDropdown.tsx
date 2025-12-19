@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import useClickOutside from "../hooks/useClickOutside";
 import { logout } from "../utils/logoutFunc";
 import { useRouter } from "next/navigation";
-import { useFriendRequestStore } from "../store/friendRequestStore";
+import { useFriendRequests } from "../hooks/useFriendRequests";
 
 const ProfileDropdown = () => {
+  const {data: requests = [], isLoading} = useFriendRequests();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { requests, fetchRequests } = useFriendRequestStore();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -18,9 +18,9 @@ const ProfileDropdown = () => {
     setShowDropdown(false);
   };
 
-  useEffect(() => {
-    fetchRequests();
-  }, []);
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
 
   return (
     <div className="relative inline-block">
