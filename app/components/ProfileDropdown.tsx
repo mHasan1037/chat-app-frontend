@@ -4,12 +4,16 @@ import useClickOutside from "../hooks/useClickOutside";
 import { logout } from "../utils/logoutFunc";
 import { useRouter } from "next/navigation";
 import { useFriendRequests } from "../hooks/useFriendRequests";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const ProfileDropdown = () => {
   const {data: requests = [], isLoading} = useFriendRequests();
+  const {data: user} = useAuthUser();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const UserFirstLetter = user?.name?.charAt(0).toUpperCase() ?? "U";
 
   useClickOutside(dropdownRef, () => setShowDropdown(false));
 
@@ -33,7 +37,7 @@ const ProfileDropdown = () => {
             {requests.length}
           </div>
         )}
-        <h1 className="font-bold">H</h1>
+        <h1 className="font-bold">{UserFirstLetter}</h1>
       </div>
       {showDropdown && (
         <div
