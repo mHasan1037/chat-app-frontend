@@ -26,7 +26,7 @@ export interface IUserSearchResult{
 }
 
 
-export type friendActionTypes = "ADD" | "ACCEPT" | "DECLINE" | "CANCEL";
+export type friendActionTypes = "ADD" | "ACCEPT" | "DECLINE" | "CANCEL" | "UNFRIEND";
 
 export interface FriendAction {
     type: friendActionTypes;
