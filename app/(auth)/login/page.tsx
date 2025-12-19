@@ -3,11 +3,14 @@ import AuthButton from "@/app/components/AuthButton";
 import AuthInput from "@/app/components/AuthInput";
 import { loginUser } from "@/app/services/authService";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,9 +18,10 @@ const LoginPage = () => {
     try{
        const data = await loginUser({email, password});
        localStorage.setItem('token', data.token);
-       window.location.href = "/chats";
+       router.push('/chats');
     }catch(error: any){
        console.log(error.response?.data?.message)
+       toast.info("Incorrect information")
     }
   };
 

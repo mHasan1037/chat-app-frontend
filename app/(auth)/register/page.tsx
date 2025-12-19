@@ -4,12 +4,14 @@ import AuthButton from "@/app/components/AuthButton";
 import AuthInput from "@/app/components/AuthInput";
 import { registerUser } from "@/app/services/authService";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const RegisterPage = () => {
     try{
       const data = await registerUser({name, email, password});
       localStorage.setItem('token', data.token);
+      router.push('/chats')
     }catch(error: any){
       console.log(error.response?.data?.message);
     }
