@@ -31,3 +31,8 @@ export const sendFriendRequest = async (toUserId: string) =>{
     const res = await api.post('/friends/request', {to: toUserId});
     return res.data;
 }
+
+export const unfriendUser = async (userId: string | null) =>{
+    const res = await api.delete(`/users/friends/${userId}`);
+    return res.data;
+}

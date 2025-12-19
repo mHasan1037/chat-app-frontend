@@ -45,8 +45,9 @@ const FriendPage = () => {
         <div>You have no friends.</div>
       ) : (
         friends.map((friend) => (
-          <div key={friend._id} onClick={() => handleFriendProfile(friend._id)}>
-            {friend.name}
+          <div key={friend._id} className="flex gap-1">
+            <p onClick={() => handleFriendProfile(friend._id)}>{friend.name}</p>
+            <button onClick={()=> friendMutation.mutate({type: 'UNFRIEND', id: friend._id!})}>Unfriend</button>
           </div>
         ))
       )}

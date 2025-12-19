@@ -4,7 +4,7 @@ import { SingleUserProps } from "../types/friendType";
 const FriendStatusActions = ({ user, onFriendAction }: SingleUserProps) => {
 
   if (user.isFriend) {
-    return <span>Friend</span>;
+    return <button onClick={()=> onFriendAction?.({type: 'UNFRIEND', id: user._id!})}>Unfriend</button>;
   }
 
   if (user.isIncomingRequest) {

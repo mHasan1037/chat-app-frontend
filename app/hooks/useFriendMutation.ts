@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { FriendAction } from "../types/friendType";
-import { acceptFriendRequest, cancelFriendRequest, declineFriendRequest, sendFriendRequest } from "../services/friendRequestService";
+import { acceptFriendRequest, cancelFriendRequest, declineFriendRequest, sendFriendRequest, unfriendUser } from "../services/friendRequestService";
 
 export const useFriendMutations = () =>{
     const queryClient = useQueryClient();
@@ -16,12 +16,15 @@ export const useFriendMutations = () =>{
                 return declineFriendRequest(id);
              case 'CANCEL':
                 return cancelFriendRequest(id);
+             case 'UNFRIEND' :
+               return unfriendUser(id);
            }
         },
         onSuccess: ()=>{
             queryClient.invalidateQueries({queryKey: ['friends']});
             queryClient.invalidateQueries({queryKey: ['user-search']});
             queryClient.invalidateQueries({queryKey: ['friend-requests']});
+            queryClient.invalidateQueries({queryKey: ["user-profile"], exact: false});
         }
     })
 }

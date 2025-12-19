@@ -1,62 +1,79 @@
 "use client";
-import { acceptFriendRequest, cancelFriendRequest, declineFriendRequest, sendFriendRequest } from "@/app/services/friendRequestService";
-import { getUserProfile } from "@/app/services/userService";
-import { IUserProfile } from "@/app/types/usertype";
+import { useFriendMutations } from "@/app/hooks/useFriendMutation";
+import { useUserProfile } from "@/app/hooks/useUserProfile";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string | string[] }>();
   const userId = Array.isArray(id) ? id[0] : id;
-  const [profile, setProfile] = useState<IUserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: profile, isLoading, isError } = useUserProfile(userId);
+  const friendMutation = useFriendMutations();
 
-  useEffect(() => {
-    if (!userId) return;
-
-    const fetchProfile = async () => {
-      try {
-        const user = await getUserProfile(userId);
-        console.log('the user', user);
-        setProfile(user);
-      } catch (err) {
-        setError("User not found");
-        setProfile(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfile();
-  }, [userId]);
-
-  if (loading) return <p>Loading profile...</p>;
-  if (error) return <p>{error}</p>;
-  if (!profile) return <p>User not found</p>;
+  if (isLoading) return <p>Loading profile...</p>;
+  if (isError || !profile) return <p>User not found</p>;
 
   return (
     <div key={profile._id} className="flex gap-2">
       <h1>{profile.name}</h1>
-      
+
       {!profile.isMe && (
         <div>
           {!profile.isFriend &&
-          !profile.isIncomingRequest &&
-          !profile.isOutgoingRequest && (
-            <button onClick={()=> sendFriendRequest(profile._id)}>Add Friend</button>
-          )}
+            !profile.isIncomingRequest &&
+            !profile.isOutgoingRequest && (
+              <button
+                onClick={() =>
+                  friendMutation.mutate({ type: "ADD", id: profile._id })
+                }
+              >
+                Add Friend
+              </button>
+            )}
           {profile.isIncomingRequest && profile.requestId && (
             <div>
-              <button onClick={()=> acceptFriendRequest(profile.requestId)}>Accept</button>
-              <button onClick={()=> declineFriendRequest(profile.requestId)}>Decline</button>
+              <button
+                onClick={() =>
+                  friendMutation.mutate({
+                    type: "ACCEPT",
+                    id: profile.requestId!,
+                  })
+                }
+              >
+                Accept
+              </button>
+              <button
+                onClick={() =>
+                  friendMutation.mutate({
+                    type: "DECLINE",
+                    id: profile.requestId!,
+                  })
+                }
+              >
+                Decline
+              </button>
             </div>
           )}
           {profile.isOutgoingRequest && profile.requestId && (
-            <button onClick={()=> cancelFriendRequest(profile.requestId)}>
+            <button
+              onClick={() =>
+                friendMutation.mutate({
+                  type: "CANCEL",
+                  id: profile.requestId!,
+                })
+              }
+            >
               Cancel Request
             </button>
           )}
-          {profile.isFriend && <button>Unfriend</button>}
+          {profile.isFriend && (
+            <button
+              onClick={() =>
+                friendMutation.mutate({ type: "UNFRIEND", id: profile._id })
+              }
+            >
+              Unfriend
+            </button>
+          )}
         </div>
       )}
     </div>
