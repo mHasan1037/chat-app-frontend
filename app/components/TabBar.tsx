@@ -12,25 +12,27 @@ const TabBar = () => {
   ];
 
   return (
-    <div>
-      {tabs.map((t) => {
+    <nav className="bg-white">
+      <div className="flex justify-center gap-8">
+        {tabs.map((t) => {
         const active = pathname === t.href;
 
         return (
           <Link
             key={t.id}
             href={t.href}
-            className={`text-center py-3 font-medium ${
+            className={`py-3 px-2 font-medium transition ${
               active
                 ? "border-b-2 text-blue-600 border-blue-600"
-                : "text-gray-600"
+                : "text-gray-600 hover:text-blue-600"
             }`}
           >
             {t.label}
           </Link>
         );
       })}
-    </div>
+      </div>
+    </nav>
   );
 };
 

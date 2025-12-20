@@ -6,13 +6,13 @@ import ProfileDropdown from "../components/ProfileDropdown";
 const ChatLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Authguard>
-      <div>
-        <div className="flex justify-between">
-          <h1>Mussanger</h1>
+      <div className="min-h-screen bg-gray-50">
+        <header className="flex justify-between px-6 py-4 bg-white shadow-sm">
+          <h1 className="text-xl font-bold text-gray-800">Chat Time</h1>
           <ProfileDropdown />
-        </div>
+        </header>
         <TabBar />
-        {children}
+        <main className="px-6 py-4">{children}</main>
       </div>
     </Authguard>
   );

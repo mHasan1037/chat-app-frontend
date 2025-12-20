@@ -27,32 +27,32 @@ const ProfileDropdown = () => {
   }
 
   return (
-    <div className="relative inline-block">
+    <div className="relative">
       <div
-        className="w-10 h-10 rounded-full bg-gray-300 center-position cursor-pointer relative"
+        className="w-10 h-10 rounded-full bg-blue-600 text-white center-position cursor-pointer relative"
         onClick={() => setShowDropdown((prev) => !prev)}
       >
         {requests.length !== 0 && (
-          <div className="absolute top-0 left-[-5px] w-5 h-5 rounded-full bg-blue-500 center-position">
+          <span className="absolute -top-1 -right-1 w-5 h-5 text-xs rounded-full bg-red-500 center-position">
             {requests.length}
-          </div>
+          </span>
         )}
-        <h1 className="font-bold">{UserFirstLetter}</h1>
+        <h1 className="font-semibold">{UserFirstLetter}</h1>
       </div>
       {showDropdown && (
         <div
-          className="absolute top-full right-0 shadow-md p-2 z-30"
+          className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg z-30"
           ref={dropdownRef}
         >
-          <ul className="whitespace-nowrap">
-            <li className="cursor-pointer" onClick={()=> handlePageChange('/profile/me')}>Profile</li>
+          <ul className="whitespace-nowrap py-1 text-sm text-gray-700">
+            <li className="cursor-pointer px-4 py-2 hover:bg-gray-100" onClick={()=> handlePageChange('/profile/me')}>Profile</li>
             <li
-              className="cursor-pointer flex gap-1"
+              className="cursor-pointer flex gap-1 py-2 px-4 hover:bg-gray-100"
               onClick={() => handlePageChange("/requests")}
             >
-              <span>Requests</span> {requests.length !== 0 && <span className="w-5 h-5 rounded-full bg-blue-500 center-position">{requests.length}</span>}
+              <span>Requests</span> {requests.length !== 0 && <span className="w-5 h-5 text-xs rounded-full bg-red-500 text-white center-position">{requests.length}</span>}
             </li>
-            <li className="cursor-pointer" onClick={logout}>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600" onClick={logout}>
               Log out
             </li>
           </ul>
