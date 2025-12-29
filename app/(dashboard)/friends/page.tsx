@@ -3,11 +3,9 @@ import RandomUsers from "@/app/components/RandomUsers";
 import { useFriendMutations } from "@/app/hooks/useFriendMutation";
 import { useFriends } from "@/app/hooks/useFriends";
 import { useUserSearch } from "@/app/hooks/useUserSearch";
-import { getAllFriendLists } from "@/app/services/friendRequestService";
-import { searchUsers } from "@/app/services/userService";
-import { IFriendType, IUserSearchResult } from "@/app/types/friendType";
+import { createOrGetConversation } from "@/app/services/chatService";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const FriendPage = () => {
   const [query, setQuery] = useState("");
@@ -19,6 +17,11 @@ const FriendPage = () => {
   const handleFriendProfile = async (id: string) => {
     router.push(`/profile/${id}`);
   };
+
+  const handleMessageUser = async (userId: string) => {
+    const convo = await createOrGetConversation(userId);
+    router.push(`/chats/${convo._id}`);
+  }
 
   return (
     <div>
@@ -47,6 +50,7 @@ const FriendPage = () => {
         friends.map((friend) => (
           <div key={friend._id} className="flex gap-1">
             <p onClick={() => handleFriendProfile(friend._id)}>{friend.name}</p>
+            <button onClick={()=> handleMessageUser(friend._id)}>Message</button>
             <button onClick={()=> friendMutation.mutate({type: 'UNFRIEND', id: friend._id!})}>Unfriend</button>
           </div>
         ))
