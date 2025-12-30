@@ -4,6 +4,7 @@ import {
   getMessagesByConversationId,
   sendMessage,
 } from "@/app/services/chatService";
+import { getSocket } from "@/app/utils/socket";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -15,14 +16,29 @@ const chatPage = () => {
 
   useEffect(() => {
     if (!conversationId) return;
+
+    const socket = getSocket();
+
+    socket.emit("joinConversation", conversationId);
+
     getMessagesByConversationId(conversationId).then(setMessages);
+
+    const handleNewMessage =  (message: any) =>{
+      setMessages((prev) => [...prev, message]);
+    };
+
+    socket.off("newMessage", handleNewMessage);
+    socket.on("newMessage", handleNewMessage);
+
+    return ()=>{
+      socket.off("newMessage", handleNewMessage);
+    }
   }, [conversationId]);
 
   const handleSendMessage = async () => {
     if (!text.trim() || !conversationId) return;
 
-    const newMessage = await sendMessage(conversationId, text);
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    await sendMessage(conversationId, text);
     setText("");
   };
 
