@@ -1,6 +1,7 @@
 "use client";
 import { useAuthUser } from "@/app/hooks/useAuthUser";
 import { getAllConversations } from "@/app/services/chatService";
+import { getSocket } from "@/app/utils/socket";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -10,10 +11,38 @@ const ChatPage = () => {
   const myUserId = useAuthUser().data?._id;
 
   useEffect(() => {
-    getAllConversations().then(setChats);
-  }, []);
+    if (!myUserId) return;
 
-  console.log(chats);
+    const socket = getSocket();
+
+     socket.on("connect", () => {
+    console.log("🟢 client socket connected:", socket.id);
+  });
+
+    socket.emit("joinUser", myUserId);
+
+    console.log("👤 emitted joinUser:", myUserId);
+
+    getAllConversations().then(setChats);
+
+    const handleConversationUpdated = (updatedChat: any) => {
+      setChats((prev) => {
+        const filtered = prev.filter((c) => c._id !== updatedChat._id);
+        return [updatedChat, ...filtered];
+      });
+    };
+
+    socket.on("conversationUpdated", handleConversationUpdated);
+
+    
+  socket.on("conversationUpdated", (data) => {
+    console.log("📥 conversationUpdated received:", data);
+  });
+
+    return () => {
+      socket.off("conversationUpdated", handleConversationUpdated);
+    };
+  }, [myUserId]);
 
   return (
     <div className="p-4">
