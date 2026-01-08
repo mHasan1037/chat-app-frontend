@@ -21,13 +21,14 @@ const FriendPage = () => {
   const handleMessageUser = async (userId: string) => {
     const convo = await createOrGetConversation(userId);
     router.push(`/chats/${convo._id}`);
-  }
+  };
 
   return (
     <div className="main-content-border">
       <input
         type="text"
         placeholder="Search Friends"
+        className="mb-3 border w-full p-1"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -48,10 +49,32 @@ const FriendPage = () => {
         <div>You have no friends.</div>
       ) : (
         friends.map((friend) => (
-          <div key={friend._id} className="flex gap-1">
-            <p onClick={() => handleFriendProfile(friend._id)}>{friend.name}</p>
-            <button onClick={()=> handleMessageUser(friend._id)}>Message</button>
-            <button onClick={()=> friendMutation.mutate({type: 'UNFRIEND', id: friend._id!})}>Unfriend</button>
+          <div
+            key={friend._id}
+            className="flex justify-between gap-1 hover:bg-gray-50 mb-1"
+          >
+            <p
+              onClick={() => handleFriendProfile(friend._id)}
+              className="cursor-pointer text-gray-800"
+            >
+              {friend.name}
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleMessageUser(friend._id)}
+                className="cursor-pointer px-3 py-1 text-sm rounded bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Message
+              </button>
+              <button
+                onClick={() =>
+                  friendMutation.mutate({ type: "UNFRIEND", id: friend._id! })
+                }
+                className="cursor-pointer px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+              >
+                Unfriend
+              </button>
+            </div>
           </div>
         ))
       )}
