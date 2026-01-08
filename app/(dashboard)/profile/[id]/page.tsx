@@ -13,7 +13,7 @@ const UserProfile = () => {
   if (isError || !profile) return <p>User not found</p>;
 
   return (
-    <div key={profile._id} className="flex gap-2">
+    <div key={profile._id} className="flex gap-2 main-content-border">
       <h1>{profile.name}</h1>
 
       {!profile.isMe && (

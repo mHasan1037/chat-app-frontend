@@ -10,6 +10,11 @@ export const getAllConversations = async () =>{
     return res.data;
 };
 
+export const getConversationById = async (conversationId: string) =>{
+    const res = await api.get(`/chats/${conversationId}`);
+    return res.data;
+}
+
 export const getMessagesByConversationId = async (conversationId: string) =>{
     const res = await api.get(`/messages/${conversationId}`);
     return res.data;

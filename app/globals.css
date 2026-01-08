@@ -30,3 +30,7 @@ body {
 @utility center-position{
   @apply flex items-center justify-center;
 }
+
+@utility main-content-border{
+  @apply px-6 py-4;
+}

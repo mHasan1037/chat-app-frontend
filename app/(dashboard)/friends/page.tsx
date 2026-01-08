@@ -24,7 +24,7 @@ const FriendPage = () => {
   }
 
   return (
-    <div>
+    <div className="main-content-border">
       <input
         type="text"
         placeholder="Search Friends"
