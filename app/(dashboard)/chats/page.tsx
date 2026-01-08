@@ -45,7 +45,7 @@ const ChatPage = () => {
   }, [myUserId]);
 
   return (
-    <div className="p-4">
+    <div className="main-content-border">
       <h1 className="text-xl font-bold mb-4">Chats</h1>
       {chats.length === 0 ? (
         <p>No conversations found.</p>

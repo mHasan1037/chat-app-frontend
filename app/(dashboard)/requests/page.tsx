@@ -13,7 +13,7 @@ const FriendRequests = () => {
   if(isLoading) return <p>Loading...</p>
 
   return (
-    <div>
+    <div className="main-content-border">
       <h1>FriendRequests</h1>
       {requests.length === 0 ? (
         <div>You have no friend requests</div>

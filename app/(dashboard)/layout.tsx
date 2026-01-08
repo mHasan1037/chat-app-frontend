@@ -12,7 +12,7 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
           <ProfileDropdown />
         </header>
         <TabBar />
-        <main className="px-6 py-4">{children}</main>
+        <main>{children}</main>
       </div>
     </Authguard>
   );

@@ -2,7 +2,7 @@ import React from 'react'
 
 const StatusPage = () => {
   return (
-    <div>StatusPagee</div>
+    <div className="main-content-border">StatusPagee</div>
   )
 }
 
