@@ -288,10 +288,6 @@ const chatPage = () => {
     endCall();
   };
 
-  if(!conversation){
-    return <div>Loading conversation</div>
-  }
-
   return (
     <div className="flex flex-col h-[80vh] relative">
       {isInCall &&
