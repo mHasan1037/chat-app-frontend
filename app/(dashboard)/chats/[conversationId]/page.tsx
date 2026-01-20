@@ -165,8 +165,8 @@ const chatPage = () => {
   useEffect(() => {
     if (remoteAudioRef.current && remoteStreamRef.current) {
       remoteAudioRef.current.srcObject = remoteStreamRef.current as any;
-    };
-    if(remoteVideoRef.current && remoteStreamRef.current){
+    }
+    if (remoteVideoRef.current && remoteStreamRef.current) {
       remoteVideoRef.current.srcObject = remoteStreamRef.current;
     }
   }, [isInCall]);
@@ -179,18 +179,22 @@ const chatPage = () => {
   const otherUser = conversation?.members?.find((m: any) => m._id !== myUserId);
 
   const startAudioCall = () => {
+    if (!otherUser?._id) return;
+    if (!myUserId || !conversationId) return;
     if (isInCall) return;
-    console.log('startAudioCall is fired');
+    console.log("startAudioCall is fired");
     startCall("audio");
   };
 
   const startVideoCall = () => {
+    if (!otherUser?._id) return;
+    if (!myUserId || !conversationId) return;
     if (isInCall) return;
     startCall("video");
   };
 
   const startCall = async (type: "audio" | "video") => {
-    console.log('startCall function got the type:', type)
+    console.log("startCall function got the type:", type);
     startAudioCallFunc({
       otherUser,
       myUserId,
@@ -284,37 +288,43 @@ const chatPage = () => {
     endCall();
   };
 
+  if(!conversation){
+    return <div>Loading conversation</div>
+  }
+
   return (
     <div className="flex flex-col h-[80vh] relative">
-      {isInCall && (localStreamRef.current?.getVideoTracks()?.length ?? 0) > 0 && (
-        <>
-          <video
-            ref={localVideoRef}
-            autoPlay
-            muted
-            playsInline
-            className="w-40 h-40"
-          />
-          <video
-            ref={remoteVideoRef}
-            autoPlay
-            playsInline
-            className="w-full h-full"
-          />
-        </>
-      )}
+      {isInCall &&
+        (localStreamRef.current?.getVideoTracks()?.length ?? 0) > 0 && (
+          <>
+            <video
+              ref={localVideoRef}
+              autoPlay
+              muted
+              playsInline
+              className="w-40 h-40"
+            />
+            <video
+              ref={remoteVideoRef}
+              autoPlay
+              playsInline
+              className="w-full h-full"
+            />
+          </>
+        )}
       {incomingCall && (
         <IncomingCallPopup onAccept={acceptCall} onReject={rejectCall} />
       )}
       <audio ref={remoteAudioRef} autoPlay />
-      {isInCall ? (
+      {isInCall && (
         <button
           onClick={endCallForBoth}
           className="flex justify-end bg-white p-2"
         >
           End
         </button>
-      ) : (
+      )}
+      {!isInCall && otherUser && (
         <ChatHeader
           user={otherUser}
           onAudioCall={startAudioCall}
