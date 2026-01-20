@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAuthUser } from "@/app/hooks/useAuthUser";
 import {
   getConversationById,
@@ -176,7 +176,13 @@ const chatPage = () => {
     await sendMessage(conversationId, message);
   };
 
-  const otherUser = conversation?.members?.find((m: any) => m._id !== myUserId);
+  const otherUser = useMemo(()=>{
+    if(!conversation?.members || !myUserId) return null;
+
+    return conversation.members
+       .map((m: any) => typeof m === 'string' ? {_id: m} : m)
+       .find((m: any) => m._id !== myUserId) || null;
+  }, [conversation, myUserId])
 
   const startAudioCall = () => {
     if (!otherUser?._id) return;
@@ -287,6 +293,9 @@ const chatPage = () => {
 
     endCall();
   };
+
+  console.log("conversation from API", conversation);
+  console.log('otherUser', otherUser)
 
   return (
     <div className="flex flex-col h-[80vh] relative">
