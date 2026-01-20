@@ -180,6 +180,7 @@ const chatPage = () => {
 
   const startAudioCall = () => {
     if (isInCall) return;
+    console.log('startAudioCall is fired');
     startCall("audio");
   };
 
@@ -189,6 +190,7 @@ const chatPage = () => {
   };
 
   const startCall = async (type: "audio" | "video") => {
+    console.log('startCall function got the type:', type)
     startAudioCallFunc({
       otherUser,
       myUserId,

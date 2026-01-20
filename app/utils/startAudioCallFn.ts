@@ -10,7 +10,7 @@ interface StartAudioCallParams {
   remoteStreamRef: React.MutableRefObject<MediaStream | null>;
   setInCall: React.Dispatch<React.SetStateAction<boolean>>;
   type: string;
-  localVideoRef?: React.MutableRefObject<HTMLVideoElement | null>
+  localVideoRef?: React.MutableRefObject<HTMLVideoElement | null>;
 }
 
 export const startAudioCallFunc = async ({
@@ -22,9 +22,22 @@ export const startAudioCallFunc = async ({
   localStreamRef,
   setInCall,
   type,
-  localVideoRef
+  localVideoRef,
 }: StartAudioCallParams) => {
   if (!otherUser?._id || !myUserId || !conversationId) return;
+
+  console.log(
+    "startAudioCallFunc fired with",
+    otherUser,
+    myUserId,
+    conversationId,
+    pcRef,
+    remoteStreamRef,
+    localStreamRef,
+    setInCall,
+    type,
+    localVideoRef,
+  );
 
   const socket = getSocket();
 
@@ -33,14 +46,15 @@ export const startAudioCallFunc = async ({
 
   remoteStreamRef.current = new MediaStream();
 
-  const localStream = type === "video" ? await getVideoStream() : await getAudioStream();
+  const localStream =
+    type === "video" ? await getVideoStream() : await getAudioStream();
   localStreamRef.current = localStream;
 
   localStream.getTracks().forEach((track) => {
     pc.addTrack(track, localStream);
   });
 
-  if(type === "video" && localVideoRef?.current){
+  if (type === "video" && localVideoRef?.current) {
     localVideoRef.current.srcObject = localStream;
   }
 
@@ -69,7 +83,7 @@ export const startAudioCallFunc = async ({
     fromUserId: myUserId,
     conversationId,
     offer,
-    type
+    type,
   });
 
   setInCall(true);

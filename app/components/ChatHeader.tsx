@@ -29,7 +29,13 @@ const ChatHeader = ({ user, onAudioCall, onVideoCall }: ChatHeaderProps) => {
         </h3>
       </div>
       <div className="flex gap-2">
-        <button onClick={onAudioCall} className="cursor-pointer">
+        <button
+          onClick={() => {
+            console.log("CALL BUTTON CLICKED");
+            onAudioCall();
+          }}
+          className="cursor-pointer"
+        >
           <IoIosCall />
         </button>
         <button onClick={onVideoCall} className="cursor-pointer">
