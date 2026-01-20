@@ -24,9 +24,7 @@ export const startAudioCallFunc = async ({
   type,
   localVideoRef,
 }: StartAudioCallParams) => {
-  if (!otherUser?._id || !myUserId || !conversationId) return;
-
-  console.log(
+    console.log(
     "startAudioCallFunc fired with",
     otherUser,
     myUserId,
@@ -38,6 +36,8 @@ export const startAudioCallFunc = async ({
     type,
     localVideoRef,
   );
+  
+  if (!otherUser?._id || !myUserId || !conversationId) return;
 
   const socket = getSocket();
 
