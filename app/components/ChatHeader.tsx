@@ -9,9 +9,11 @@ interface ChatHeaderProps {
     _id: string;
     name: string;
   };
+  onAudioCall: () => void;
+  onVideoCall: () => void;
 }
 
-const ChatHeader = ({ user }: ChatHeaderProps) => {
+const ChatHeader = ({ user, onAudioCall, onVideoCall }: ChatHeaderProps) => {
   const router = useRouter();
   return (
     <div className="flex justify-between bg-white p-2">
@@ -27,8 +29,12 @@ const ChatHeader = ({ user }: ChatHeaderProps) => {
         </h3>
       </div>
       <div className="flex gap-2">
-        <IoIosCall />
-        <FaVideo />
+        <button onClick={onAudioCall} className="cursor-pointer">
+          <IoIosCall />
+        </button>
+        <button onClick={onVideoCall} className="cursor-pointer">
+          <FaVideo />
+        </button>
         <IoMdInformationCircle />
       </div>
     </div>
