@@ -16,7 +16,10 @@ import { getAudioStream, getVideoStream, rtcConfig } from "@/app/utils/webrtc";
 import IncomingCallPopup from "@/app/components/IncomingCallPopup";
 
 const chatPage = () => {
-  const { conversationId } = useParams<{ conversationId: string }>();
+  const params = useParams();
+  const conversationId = Array.isArray(params?.conversationId)
+    ? params.conversationId[0]
+    : params?.conversationId;
   const [messages, setMessages] = useState<any[]>([]);
   const [conversation, setConversation] = useState<any>(null);
   const myUserId = useAuthUser().data?._id;
@@ -59,7 +62,7 @@ const chatPage = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (!conversationId) return;
+    if (!conversationId || !myUserId) return;
 
     const socket = getSocket();
 
@@ -78,7 +81,7 @@ const chatPage = () => {
     return () => {
       socket.off("newMessage", handleNewMessage);
     };
-  }, [conversationId]);
+  }, [conversationId, myUserId]);
 
   const endCall = () => {
     localStreamRef.current?.getTracks().forEach((t) => t.stop());
@@ -176,13 +179,15 @@ const chatPage = () => {
     await sendMessage(conversationId, message);
   };
 
-  const otherUser = useMemo(()=>{
-    if(!conversation?.members || !myUserId) return null;
+  const otherUser = useMemo(() => {
+    if (!conversation?.members || !myUserId) return null;
 
-    return conversation.members
-       .map((m: any) => typeof m === 'string' ? {_id: m} : m)
-       .find((m: any) => m._id !== myUserId) || null;
-  }, [conversation, myUserId])
+    return (
+      conversation.members
+        .map((m: any) => (typeof m === "string" ? { _id: m } : m))
+        .find((m: any) => m._id !== myUserId) || null
+    );
+  }, [conversation, myUserId]);
 
   const startAudioCall = () => {
     if (!otherUser?._id) return;
@@ -200,6 +205,7 @@ const chatPage = () => {
   };
 
   const startCall = async (type: "audio" | "video") => {
+    if(!conversationId) return;
     console.log("startCall function got the type:", type);
     startAudioCallFunc({
       otherUser,
@@ -295,7 +301,7 @@ const chatPage = () => {
   };
 
   console.log("conversation from API", conversation);
-  console.log('otherUser', otherUser)
+  console.log("otherUser", otherUser);
 
   return (
     <div className="flex flex-col h-[80vh] relative">
