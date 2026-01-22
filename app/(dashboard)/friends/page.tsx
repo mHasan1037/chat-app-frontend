@@ -62,7 +62,7 @@ const FriendPage = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => handleMessageUser(friend._id)}
-                className="cursor-pointer px-3 py-1 text-sm rounded bg-blue-600 text-white hover:bg-blue-700"
+                className="action-btn action-btn-blue"
               >
                 Message
               </button>
@@ -70,7 +70,7 @@ const FriendPage = () => {
                 onClick={() =>
                   friendMutation.mutate({ type: "UNFRIEND", id: friend._id! })
                 }
-                className="cursor-pointer px-3 py-1 text-sm rounded bg-red-500 text-white hover:bg-red-600"
+                className="action-btn action-btn-red"
               >
                 Unfriend
               </button>

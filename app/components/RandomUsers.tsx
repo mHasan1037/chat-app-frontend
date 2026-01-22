@@ -9,7 +9,7 @@ const RandomUsers = ({users, onFriendAction, onProfileVisit} : RandomUsersProps)
     <div>
       {users.map((user) =>(
         <div key={user._id}>
-          <div className='flex'>
+          <div className='flex justify-between'>
             <p onClick={()=> onProfileVisit(user._id)}>{user.name}</p>
             <FriendStatusActions 
               user={user}

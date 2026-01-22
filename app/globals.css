@@ -27,6 +27,18 @@ body {
   @apply bg-blue-600 hover:bg-blue-700 active:scale-95 transition text-white;
 }
 
+@utility action-btn{
+  @apply cursor-pointer px-3 py-1 text-sm rounded
+}
+
+@utility action-btn-blue{
+  @apply bg-blue-600 text-white hover:bg-blue-700
+}
+
+@utility action-btn-red{
+  @apply bg-red-500 text-white hover:bg-red-600
+}
+
 @utility center-position{
   @apply flex items-center justify-center;
 }
