@@ -1,4 +1,5 @@
 "use client";
+import CreatePost from "@/app/components/CreatePost";
 import { useFriendMutations } from "@/app/hooks/useFriendMutation";
 import { useUserProfile } from "@/app/hooks/useUserProfile";
 import { useParams } from "next/navigation";
@@ -76,6 +77,7 @@ const UserProfile = () => {
           )}
         </div>
       )}
+      {profile.isMe && <CreatePost />}
     </div>
   );
 };
