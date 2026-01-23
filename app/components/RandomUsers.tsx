@@ -10,7 +10,7 @@ const RandomUsers = ({users, onFriendAction, onProfileVisit} : RandomUsersProps)
       {users.map((user) =>(
         <div key={user._id}>
           <div className='flex justify-between'>
-            <p onClick={()=> onProfileVisit(user._id)}>{user.name}</p>
+            <p onClick={()=> onProfileVisit(user._id)} className='cursor-pointer'>{user.name}</p>
             <FriendStatusActions 
               user={user}
               onFriendAction={onFriendAction}
