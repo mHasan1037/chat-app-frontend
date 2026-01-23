@@ -28,7 +28,7 @@ const FriendPage = () => {
       <input
         type="text"
         placeholder="Search Friends"
-        className="mb-3 border w-full p-1"
+        className="mb-3 border rounded-md w-full p-1"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
