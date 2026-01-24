@@ -34,3 +34,8 @@ export const getUserPosts = async ({
 
   return res.data;
 };
+
+export const deletePost = async (postId: string) =>{
+  const res = await api.delete(`/posts/${postId}`);
+  return res.data;
+}

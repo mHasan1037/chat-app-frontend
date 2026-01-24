@@ -1,12 +1,15 @@
 "use client"
 import CreatePost from '@/app/components/CreatePost'
 import PostItem from '@/app/components/PostItem';
+import { useAuthUser } from '@/app/hooks/useAuthUser';
 import { useFeedPosts } from '@/app/hooks/useFeedPosts'
+import { useUserProfile } from '@/app/hooks/useUserProfile';
 import React, { useEffect, useRef } from 'react'
 
 const StatusPage = () => {
   const {data: feedPost, fetchNextPage, hasNextPage, isFetchingNextPage, status} = useFeedPosts();
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const myUserId = useAuthUser().data?._id;
 
   useEffect(()=>{
      if(!observerRef.current || !hasNextPage) return;
@@ -35,7 +38,7 @@ const StatusPage = () => {
       {feedPost?.pages.map((page, pageIndex) =>(
         <div key={pageIndex} className="space-y-4">
           {page.posts.map((post: any) =>(
-            <PostItem key={post._id} post={post} />
+            <PostItem key={post._id} post={post} currentUserId={myUserId}/>
           ))}
         </div>
       ))}

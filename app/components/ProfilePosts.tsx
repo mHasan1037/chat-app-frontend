@@ -39,7 +39,7 @@ const ProfilePosts = ({
       {allPosts?.pages.map((page, pageIndex) => (
         <div key={pageIndex} className="space-y-4">
           {page.posts.map((post: any) => (
-            <PostItem key={post._id} post={post} />
+            <PostItem key={post._id} post={post} currentUserId={userId}/>
           ))}
         </div>
       ))}
