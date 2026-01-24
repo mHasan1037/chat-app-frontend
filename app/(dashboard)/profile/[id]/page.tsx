@@ -86,7 +86,7 @@ const UserProfile = () => {
       </div>
 
       {profile.isMe && <CreatePost />}
-      <ProfilePosts userId={userId} />
+      <ProfilePosts userId={profile._id} />
     </div>
   );
 };
