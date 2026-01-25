@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDeletePost } from "../hooks/useDeletePost";
+import EditPostModel from "./EditPostModel";
+import PostForm from "./PostForm";
+import { Visibility } from "../types/postType";
+import { useUpdatePost } from "../hooks/useUpdatePost";
 
 interface PostItemProps {
   post: any;
@@ -7,9 +11,27 @@ interface PostItemProps {
 }
 
 const PostItem = ({ post, currentUserId }: PostItemProps) => {
-  const { mutate: deleteMutate, isPending } = useDeletePost();
   const isOwner =
     post?.author?._id === currentUserId || post?.author === currentUserId;
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [content, setContent] = useState(post.content);
+  const [visibility, setVisibility] = useState<Visibility>(post.visibility);
+
+  const { mutate: updateMutate, isPending: isUpdating } = useUpdatePost();
+  const { mutate: deleteMutate, isPending } = useDeletePost();
+
+  const handleUpdate = () => {
+    if (!content.trim()) return;
+
+    updateMutate(
+      { postId: post._id, content, visibility },
+      {
+        onSuccess: () => {
+          setIsEditOpen(false);
+        },
+      },
+    );
+  };
 
   const handleDelete = () => {
     const ok = window.confirm("Delete this post?");
@@ -17,26 +39,62 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
     deleteMutate(post?._id);
   };
   return (
-    <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="font-medium text-sm">{post.author?.name}</div>
-        {isOwner && (
-          <button
-            className="action-btn action-btn-red disabled:opacity-50"
-            disabled={isPending}
-            onClick={handleDelete}
-          >
-            {isPending ? "Deleting..." : "Delete"}
-          </button>
-        )}
+    <>
+      <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="font-medium text-sm">{post.author?.name}</div>
+          {isOwner && (
+            <div className="flex gap-2">
+              <button
+                className="action-btn action-btn-blue"
+                onClick={() => setIsEditOpen(true)}
+              >
+                Edit
+              </button>
+              <button
+                className="action-btn action-btn-red disabled:opacity-50"
+                disabled={isPending}
+                onClick={handleDelete}
+              >
+                {isPending ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          )}
+        </div>
+        <p className="text-gray-800 text-sm whitespace-pre-wrap">
+          {post.content}
+        </p>
+        <div className="flex justify-between">
+          <span className="text-xs text-gray-500">
+            {new Date(post.createdAt).toLocaleString()}
+          </span>
+          {post.isEdited && <p className="text-xs text-gray-500">Edited</p>}
+        </div>
       </div>
-      <p className="text-gray-800 text-sm whitespace-pre-wrap">
-        {post.content}
-      </p>
-      <span className="text-xs text-gray-500">
-        {new Date(post.createdAt).toLocaleString()}
-      </span>
-    </div>
+      <EditPostModel
+        isOpen={isEditOpen}
+        onClose={() => {
+          setIsEditOpen(false);
+          setContent(post.content);
+          setVisibility(post.visibility);
+        }}
+      >
+        <PostForm
+          content={content}
+          onContentChange={setContent}
+          visibility={visibility}
+          onVisibilityChange={setVisibility}
+          mode="edit"
+          submitState={isUpdating ? "submitting" : "idle"}
+          onSubmit={handleUpdate}
+          onCancel={() => {
+            setIsEditOpen(false);
+            setContent(post.content);
+            setVisibility(post.visibility);
+          }}
+        />
+      </EditPostModel>
+    </>
   );
 };
 
