@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useCreatePost } from "../hooks/useCreatePost";
-
-type Visibility = "public" | "friends" | "private";
+import PostForm from "./PostForm";
+import { Visibility } from "../types/postType";
 
 const CreatePost = () => {
   const [content, setContent] = useState("");
@@ -25,34 +25,15 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-white border rounded-lg p-4 space-y-3 shadow-sm">
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Share your thoughts with the world"
-        className="w-full resize-none border rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        rows={3}
-      />
-      <div className="flex items-center justify-between">
-        <select
-          value={visibility}
-          onChange={(e) => setVisibility(e.target.value as Visibility)}
-          className="border rounded-md px-3 py-1.5 text-sm bg-gray-50"
-        >
-          <option value={"friends"}>Friends</option>
-          <option value={"public"}>Public</option>
-          <option value={"private"}>Only Me</option>
-        </select>
-        <button
-          onClick={handleSubmit}
-          disabled={isPending || !content.trim()}
-          className="action-btn action-btn-blue"
-        >
-          {isPending ? "Posting..." : "Post"}
-        </button>
-      </div>
-      {error && <p className="text-sm text-red-500">{(error as Error).message}</p>}
-    </div>
+    <PostForm
+      content={content}
+      onContentChange={setContent}
+      visibility={visibility}
+      onVisibilityChange={setVisibility}
+      mode="create"
+      submitState={isPending ? "submitting" : "idle"}
+      onSubmit={handleSubmit}
+    />
   );
 };
 

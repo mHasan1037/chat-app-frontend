@@ -1,4 +1,4 @@
-import { CreatePostPayload } from "../types/postType";
+import { CreatePostPayload, UpdatePostPayload } from "../types/postType";
 import api from "../utils/api";
 
 export const createPost = async (payload: CreatePostPayload) => {
@@ -24,7 +24,6 @@ export const getUserPosts = async ({
   userId: string;
   pageParam?: string;
 }) => {
-    
   const res = await api.get(`/posts/user/${userId}`, {
     params: {
       cursor: pageParam,
@@ -35,7 +34,19 @@ export const getUserPosts = async ({
   return res.data;
 };
 
-export const deletePost = async (postId: string) =>{
+export const deletePost = async (postId: string) => {
   const res = await api.delete(`/posts/${postId}`);
   return res.data;
-}
+};
+
+export const updatePost = async ({
+  postId,
+  content,
+  visibility,
+}: UpdatePostPayload) => {
+  const res = await api.patch(`/posts/${postId}`, {
+    content,
+    visibility,
+  });
+  return res.data;
+};
