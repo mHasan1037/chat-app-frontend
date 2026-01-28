@@ -4,6 +4,8 @@ import EditPostModel from "./EditPostModel";
 import PostForm from "./PostForm";
 import { Visibility } from "../types/postType";
 import { useUpdatePost } from "../hooks/useUpdatePost";
+import { useToggleLike } from "../hooks/useToggleLike";
+import { AiFillLike } from "react-icons/ai";
 
 interface PostItemProps {
   post: any;
@@ -19,6 +21,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
 
   const { mutate: updateMutate, isPending: isUpdating } = useUpdatePost();
   const { mutate: deleteMutate, isPending } = useDeletePost();
+  const { mutate: toggleLikeMutate, isPending: isLiking } = useToggleLike();
 
   const handleUpdate = () => {
     if (!content.trim()) return;
@@ -64,11 +67,20 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
         <p className="text-gray-800 text-sm whitespace-pre-wrap">
           {post.content}
         </p>
-        <div className="flex justify-between">
-          <span className="text-xs text-gray-500">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-1 items-center">
+            <AiFillLike
+              onClick={() => !isLiking && toggleLikeMutate(post._id)}
+              className={`cursor-pointer transition-colors ${isLiking ? "text-gray-300" : post.likedByMe ? "text-blue-600" : "text-gray-600"}`}
+            />{" "}
+            {post.likeCount}
+          </div>
+          <p className="text-xs text-gray-500 flex gap-2">
+            {post.isEdited && (
+              <span className="text-xs text-gray-500">Edited</span>
+            )}
             {new Date(post.createdAt).toLocaleString()}
-          </span>
-          {post.isEdited && <p className="text-xs text-gray-500">Edited</p>}
+          </p>
         </div>
       </div>
       <EditPostModel
