@@ -15,13 +15,11 @@ const ChatPage = () => {
 
     const socket = getSocket();
 
-     socket.on("connect", () => {
-    console.log("🟢 client socket connected:", socket.id);
-  });
+    socket.on("connect", () => {
+      console.log("🟢 client socket connected:", socket.id);
+    });
 
     socket.emit("joinUser", myUserId);
-
-    console.log("👤 emitted joinUser:", myUserId);
 
     getAllConversations().then(setChats);
 
@@ -34,10 +32,9 @@ const ChatPage = () => {
 
     socket.on("conversationUpdated", handleConversationUpdated);
 
-    
-  socket.on("conversationUpdated", (data) => {
-    console.log("📥 conversationUpdated received:", data);
-  });
+    socket.on("conversationUpdated", (data) => {
+      console.log("📥 conversationUpdated received:", data);
+    });
 
     return () => {
       socket.off("conversationUpdated", handleConversationUpdated);
@@ -53,7 +50,7 @@ const ChatPage = () => {
         <div className="space-y-2">
           {chats.map((chat) => {
             const otherUser = chat.members.find(
-              (member: any) => member._id !== myUserId
+              (member: any) => member._id !== myUserId,
             );
 
             const lastSenderIsMe = chat.lastMessage?.sender === myUserId;

@@ -6,6 +6,8 @@ import { Visibility } from "../types/postType";
 import { useUpdatePost } from "../hooks/useUpdatePost";
 import { useToggleLike } from "../hooks/useToggleLike";
 import { AiFillLike } from "react-icons/ai";
+import { FaComment } from "react-icons/fa";
+import Comments from "./Comments";
 
 interface PostItemProps {
   post: any;
@@ -41,6 +43,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
     if (!ok) return;
     deleteMutate(post?._id);
   };
+
   return (
     <>
       <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
@@ -68,12 +71,20 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
           {post.content}
         </p>
         <div className="flex justify-between items-center">
-          <div className="flex gap-1 items-center">
-            <AiFillLike
-              onClick={() => !isLiking && toggleLikeMutate(post._id)}
-              className={`cursor-pointer transition-colors ${isLiking ? "text-gray-300" : post.likedByMe ? "text-blue-600" : "text-gray-600"}`}
-            />{" "}
-            {post.likeCount}
+          <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-0.5">
+              <AiFillLike
+                onClick={() => !isLiking && toggleLikeMutate(post._id)}
+                className={`cursor-pointer transition-colors ${isLiking ? "text-gray-300" : post.likedByMe ? "text-blue-600" : "text-gray-600"}`}
+              />{" "}
+              {post.likeCount}
+            </div>
+            {post.commentCount > 0 && (
+              <div className="flex items-center gap-0.5 ">
+                <FaComment className="text-gray-600"/>
+                {post.commentCount}
+              </div>
+            )}
           </div>
           <p className="text-xs text-gray-500 flex gap-2">
             {post.isEdited && (
@@ -82,6 +93,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
             {new Date(post.createdAt).toLocaleString()}
           </p>
         </div>
+        <Comments postId={post._id} />
       </div>
       <EditPostModel
         isOpen={isEditOpen}
