@@ -80,15 +80,13 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
               />{" "}
               {post.likeCount}
             </div>
-            {post.commentCount > 0 && (
-              <div
+            <div
                 className="flex items-center gap-0.5 cursor-pointer"
                 onClick={() => setShowComment(!showComment)}
               >
                 <FaComment className="text-gray-600" />
                 {post.commentCount}
               </div>
-            )}
           </div>
           <p className="text-xs text-gray-500 flex gap-2">
             {post.isEdited && (

@@ -22,7 +22,7 @@ const Comments = ({ postId }: { postId: string }) => {
           placeholder="Write a comment..."
           className="flex-1 border rounded p-1"
         />
-        <button onClick={submit} disabled={isPending}>
+        <button className="action-btn action-btn-blue" onClick={submit} disabled={isPending}>
           Send
         </button>
       </div>
