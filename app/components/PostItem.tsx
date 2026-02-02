@@ -20,6 +20,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [content, setContent] = useState(post.content);
   const [visibility, setVisibility] = useState<Visibility>(post.visibility);
+  const [showComment, setShowComment] = useState(false);
 
   const { mutate: updateMutate, isPending: isUpdating } = useUpdatePost();
   const { mutate: deleteMutate, isPending } = useDeletePost();
@@ -80,8 +81,11 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
               {post.likeCount}
             </div>
             {post.commentCount > 0 && (
-              <div className="flex items-center gap-0.5 ">
-                <FaComment className="text-gray-600"/>
+              <div
+                className="flex items-center gap-0.5 cursor-pointer"
+                onClick={() => setShowComment(!showComment)}
+              >
+                <FaComment className="text-gray-600" />
                 {post.commentCount}
               </div>
             )}
@@ -93,7 +97,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
             {new Date(post.createdAt).toLocaleString()}
           </p>
         </div>
-        <Comments postId={post._id} />
+        {showComment && <Comments postId={post._id} />}
       </div>
       <EditPostModel
         isOpen={isEditOpen}
