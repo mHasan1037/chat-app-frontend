@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useUserPosts } from "../hooks/useUserPosts";
 import PostItem from "./PostItem";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const ProfilePosts = ({
   userId,
@@ -14,6 +15,7 @@ const ProfilePosts = ({
     isFetchingNextPage,
     status,
   } = useUserPosts(userId);
+  const myUserId = useAuthUser().data?._id;
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -39,7 +41,7 @@ const ProfilePosts = ({
       {allPosts?.pages.map((page, pageIndex) => (
         <div key={pageIndex} className="space-y-4">
           {page.posts.map((post: any) => (
-            <PostItem key={post._id} post={post} currentUserId={userId}/>
+            <PostItem key={post._id} post={post} canEdit={myUserId === post.author?._id}/>
           ))}
         </div>
       ))}

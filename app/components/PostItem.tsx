@@ -11,12 +11,10 @@ import Comments from "./Comments";
 
 interface PostItemProps {
   post: any;
-  currentUserId: string;
+  canEdit?: boolean;
 }
 
-const PostItem = ({ post, currentUserId }: PostItemProps) => {
-  const isOwner =
-    post?.author?._id === currentUserId || post?.author === currentUserId;
+const PostItem = ({ post, canEdit = false }: PostItemProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [content, setContent] = useState(post.content);
   const [visibility, setVisibility] = useState<Visibility>(post.visibility);
@@ -50,7 +48,7 @@ const PostItem = ({ post, currentUserId }: PostItemProps) => {
       <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
           <div className="font-medium text-sm">{post.author?.name}</div>
-          {isOwner && (
+          {canEdit && (
             <div className="flex gap-2">
               <button
                 className="action-btn action-btn-blue"
