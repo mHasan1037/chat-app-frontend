@@ -8,6 +8,7 @@ import { useToggleLike } from "../hooks/useToggleLike";
 import { AiFillLike } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import Comments from "./Comments";
+import { useRouter } from "next/navigation";
 
 interface PostItemProps {
   post: any;
@@ -19,6 +20,7 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
   const [content, setContent] = useState(post.content);
   const [visibility, setVisibility] = useState<Visibility>(post.visibility);
   const [showComment, setShowComment] = useState(false);
+  const router = useRouter();
 
   const { mutate: updateMutate, isPending: isUpdating } = useUpdatePost();
   const { mutate: deleteMutate, isPending } = useDeletePost();
@@ -47,7 +49,12 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
     <>
       <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
-          <div className="font-medium text-sm">{post.author?.name}</div>
+          <div
+            className="font-medium text-sm cursor-pointer"
+            onClick={() => router.push(`/profile/${post.author?._id}`)}
+          >
+            {post.author?.name}
+          </div>
           {canEdit && (
             <div className="flex gap-2">
               <button
@@ -79,15 +86,17 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
               {post.likeCount}
             </div>
             <div
-                className="flex items-center gap-0.5 cursor-pointer"
-                onClick={() => setShowComment(!showComment)}
-              >
-                <FaComment className="text-gray-600" />
-                {post.commentCount}
-              </div>
+              className="flex items-center gap-0.5 cursor-pointer"
+              onClick={() => setShowComment(!showComment)}
+            >
+              <FaComment className="text-gray-600" />
+              {post.commentCount}
+            </div>
           </div>
           <p className="text-xs text-gray-500 flex gap-2">
-            <span className="text-xs text-gray-500 capitalize">{post.visibility}</span>
+            <span className="text-xs text-gray-500 capitalize">
+              {post.visibility}
+            </span>
             {post.isEdited && (
               <span className="text-xs text-gray-500">Edited</span>
             )}
