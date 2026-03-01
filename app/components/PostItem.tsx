@@ -87,6 +87,7 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
               </div>
           </div>
           <p className="text-xs text-gray-500 flex gap-2">
+            <span className="text-xs text-gray-500 capitalize">{post.visibility}</span>
             {post.isEdited && (
               <span className="text-xs text-gray-500">Edited</span>
             )}
