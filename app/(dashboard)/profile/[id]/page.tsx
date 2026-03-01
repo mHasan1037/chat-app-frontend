@@ -15,7 +15,7 @@ const UserProfile = () => {
   if (isError || !profile) return <p>User not found</p>;
 
   return (
-    <div key={profile._id} className="max-w-xl mx-auto space-y-4">
+    <div key={profile._id} className="space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">{profile.name}</h1>
         {!profile.isMe && (
