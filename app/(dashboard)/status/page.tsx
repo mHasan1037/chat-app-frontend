@@ -38,7 +38,7 @@ const StatusPage = () => {
       {feedPost?.pages.map((page, pageIndex) =>(
         <div key={pageIndex} className="space-y-4">
           {page.posts.map((post: any) =>(
-            <PostItem key={post._id} post={post} currentUserId={myUserId}/>
+            <PostItem key={post._id} post={post} canEdit={post.author?._id === myUserId}/>
           ))}
         </div>
       ))}
