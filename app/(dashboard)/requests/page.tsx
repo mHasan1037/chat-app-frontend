@@ -13,7 +13,7 @@ const FriendRequests = () => {
 
   return (
     <div className="max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6">
-      <h1 className="text-xl font-bold mb-6 border-b pb-3">FriendRequests</h1>
+      <h1 className="text-xl font-bold mb-6 border-b border-color pb-3">FriendRequests</h1>
       {requests.length === 0 ? (
         <div className="text-gray-500 text-center py-10">
           You have no friend requests

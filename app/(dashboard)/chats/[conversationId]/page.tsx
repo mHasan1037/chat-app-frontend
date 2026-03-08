@@ -71,7 +71,7 @@ const chatPage = () => {
   const otherUser = conversation?.members?.find((m: any) => m._id !== myUserId);
 
   return (
-    <div className="flex flex-col h-[80vh]">
+    <div className="flex flex-col h-[80vh] main-content-border">
       <ChatHeader user={otherUser} />
       <div
         ref={containerRef}

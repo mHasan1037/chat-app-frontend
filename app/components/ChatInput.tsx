@@ -14,9 +14,9 @@ const ChatInput = ({ onSend }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex p-3 border-t">
+    <div className="flex p-3 border-t border-color">
       <input
-        className="flex-1 border rounded px-3 py-2"
+        className="flex-1 border rounded px-3 py-2 border-color"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => {

@@ -31,7 +31,7 @@ const PostForm = ({
   };
 
   return (
-    <div className="bg-white border rounded-lg p-4 space-y-3 shadow-sm">
+    <div className="bg-white border border-color rounded-lg p-4 space-y-3 shadow-sm">
       <textarea
         value={content}
         onChange={(e) => onContentChange(e.target.value)}
@@ -40,14 +40,14 @@ const PostForm = ({
             ? "Share your thoughts with the world"
             : "Edit your post"
         }
-        className="w-full resize-none border rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full resize-none border border-color rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         rows={3}
       />
       <div className="flex items-center justify-between">
         <select
           value={visibility}
           onChange={(e) => onVisibilityChange(e.target.value as Visibility)}
-          className="border rounded-md px-3 py-1.5 text-sm bg-gray-50"
+          className="border border-color rounded-md px-3 py-1.5 text-sm bg-gray-50"
         >
           <option value={"friends"}>Friends</option>
           <option value={"public"}>Public</option>

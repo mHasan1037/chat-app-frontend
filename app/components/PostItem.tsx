@@ -47,7 +47,7 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
 
   return (
     <>
-      <div className="bg-white border rounded-lg p-4 space-y-2 shadow-sm">
+      <div className="bg-white border border-color rounded-lg p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
           <div
             className="font-medium text-sm cursor-pointer"

@@ -15,7 +15,7 @@
 } */
 
 body {
- 
+  
 }
 
 @utility input-base {
@@ -43,6 +43,13 @@ body {
   @apply flex items-center justify-center;
 }
 
+@utility border-color{
+  @apply border-gray-300
+}
+
 @utility main-content-border{
   @apply px-6 py-4 space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6;
 }
+
+
+

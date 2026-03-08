@@ -58,7 +58,7 @@ const ChatPage = () => {
             return (
               <div
                 key={chat._id}
-                className="p-3 border-b cursor-pointer hover:bg-gray-100"
+                className="p-3 border-color border-b cursor-pointer hover:bg-gray-100"
                 onClick={() => router.push(`/chats/${chat._id}`)}
               >
                 <p className="font-semibold">{otherUser?.name}</p>
