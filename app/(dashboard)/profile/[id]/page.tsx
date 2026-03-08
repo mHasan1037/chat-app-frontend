@@ -2,22 +2,37 @@
 import CreatePost from "@/app/components/CreatePost";
 import ProfilePosts from "@/app/components/ProfilePosts";
 import { useFriendMutations } from "@/app/hooks/useFriendMutation";
+import { useFriends } from "@/app/hooks/useFriends";
 import { useUserProfile } from "@/app/hooks/useUserProfile";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string | string[] }>();
   const userId = Array.isArray(id) ? id[0] : id;
   const { data: profile, isLoading, isError } = useUserProfile(userId);
+  const { data: usersFriends = [], isLoading: friendsLoading } = useFriends(
+    profile?._id,
+  );
   const friendMutation = useFriendMutations();
+  const router = useRouter();
 
-  if (isLoading) return <p>Loading profile...</p>;
+  if (isLoading || friendsLoading) return <p>Loading profile...</p>;
   if (isError || !profile) return <p>User not found</p>;
 
+  const handleFriendProfile = async (id: string) => {
+    router.push(`/profile/${id}`);
+  };
+
+
   return (
-    <div key={profile._id} className="space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-lg font-semibold">{profile.name}</h1>
+    <div
+      key={profile._id}
+      className="space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6 flex items-start gap-10"
+    >
+      <div className="">
+        <h1 className="text-lg font-semibold whitespace-nowrap">
+          {profile.name}
+        </h1>
         {!profile.isMe && (
           <div>
             {!profile.isFriend &&
@@ -66,7 +81,7 @@ const UserProfile = () => {
                     id: profile.requestId!,
                   })
                 }
-                className="action-btn action-btn-red"
+                className="action-btn action-btn-red whitespace-nowrap"
               >
                 Cancel Request
               </button>
@@ -83,10 +98,27 @@ const UserProfile = () => {
             )}
           </div>
         )}
+        {usersFriends?.length !== 0 && (
+          <div className="my-5">
+            <h1 className="text-lg font-bold">Friends</h1>
+            {usersFriends?.map((friend) => (
+              <div key={friend._id}>
+                <p
+                  className="whitespace-nowrap cursor-pointer"
+                  onClick={() => handleFriendProfile(friend._id)}
+                >
+                  {friend.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {profile.isMe && <CreatePost />}
-      <ProfilePosts userId={profile._id} />
+      <div className="flex flex-col gap-5 w-full">
+        {profile.isMe && <CreatePost />}
+        <ProfilePosts userId={profile._id} />
+      </div>
     </div>
   );
 };

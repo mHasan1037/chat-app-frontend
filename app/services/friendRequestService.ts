@@ -2,8 +2,9 @@
 import { IFriendRequest } from "../types/friendType";
 import api from "../utils/api"
 
-export const getAllFriendLists = async () =>{
-    const res = await api.get('/friends');
+export const getAllFriendLists = async (userId?: string) =>{
+    const url = userId ? `/friends/${userId}/friends` : '/friends';
+    const res = await api.get(url);
     return res.data;
 };
 
