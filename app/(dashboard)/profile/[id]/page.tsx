@@ -5,6 +5,7 @@ import { useFriendMutations } from "@/app/hooks/useFriendMutation";
 import { useFriends } from "@/app/hooks/useFriends";
 import { useUserProfile } from "@/app/hooks/useUserProfile";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string | string[] }>();
@@ -23,16 +24,24 @@ const UserProfile = () => {
     router.push(`/profile/${id}`);
   };
 
-
   return (
     <div
       key={profile._id}
       className="space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6 flex items-start gap-10"
     >
-      <div className="">
-        <h1 className="text-lg font-semibold whitespace-nowrap">
-          {profile.name}
-        </h1>
+      <div>
+        <div className="flex flex-col items-center">
+          <Image
+            src="/profile_pic.png"
+            alt="Profile"
+            width={60}
+            height={60}
+            className="rounded-full"
+          />
+          <h1 className="text-lg font-semibold whitespace-nowrap">
+            {profile.name}
+          </h1>
+        </div>
         {!profile.isMe && (
           <div>
             {!profile.isFriend &&
