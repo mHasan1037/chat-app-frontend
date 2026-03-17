@@ -9,4 +9,5 @@ export interface IUserProfile{
     isOutgoingRequest: boolean;
     name: string;
     requestId: string | null;
+    profilePicture?: string;
 }
