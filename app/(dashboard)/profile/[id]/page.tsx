@@ -1,6 +1,4 @@
 "use client";
-import CreatePost from "@/app/components/CreatePost";
-import ProfilePosts from "@/app/components/ProfilePosts";
 import { useFriendMutations } from "@/app/hooks/useFriendMutation";
 import { useFriends } from "@/app/hooks/useFriends";
 import { useUserProfile } from "@/app/hooks/useUserProfile";
@@ -9,6 +7,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { CiEdit } from "react-icons/ci";
 import Image from "next/image";
 import { useUpdateProfilePicture } from "@/app/hooks/useUpdateProfilePicture";
+import ProfilePostPic from "@/app/components/ProfilePostPic";
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string | string[] }>();
@@ -63,7 +62,11 @@ const UserProfile = () => {
               >
                 <Image
                   key={profile.profilePicture}
-                  src={profile.profilePicture ? profile.profilePicture : "/profile_pic.png"}
+                  src={
+                    profile.profilePicture
+                      ? profile.profilePicture
+                      : "/profile_pic.png"
+                  }
                   alt="Profile"
                   fill
                   className="object-cover"
@@ -160,11 +163,7 @@ const UserProfile = () => {
           </div>
         )}
       </div>
-
-      <div className="flex flex-col gap-5 w-full">
-        {profile.isMe && <CreatePost />}
-        <ProfilePosts userId={profile._id} />
-      </div>
+      <ProfilePostPic userId={userId} />
     </div>
   );
 };
