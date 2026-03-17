@@ -5,10 +5,11 @@ import { logout } from "../utils/logoutFunc";
 import { useRouter } from "next/navigation";
 import { useFriendRequests } from "../hooks/useFriendRequests";
 import { useAuthUser } from "../hooks/useAuthUser";
+import Image from "next/image";
 
 const ProfileDropdown = () => {
-  const {data: requests = [], isLoading} = useFriendRequests();
-  const {data: user} = useAuthUser();
+  const { data: requests = [], isLoading } = useFriendRequests();
+  const { data: user } = useAuthUser();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -22,22 +23,33 @@ const ProfileDropdown = () => {
     setShowDropdown(false);
   };
 
-  if(isLoading){
-    return <h1>Loading...</h1>
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
 
   return (
     <div className="relative">
       <div
-        className="w-10 h-10 rounded-full bg-blue-600 text-white center-position cursor-pointer relative"
+        className="w-10 h-10 cursor-pointer relative"
         onClick={() => setShowDropdown((prev) => !prev)}
       >
         {requests.length !== 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 text-xs rounded-full bg-red-500 center-position">
+          <span className="absolute -top-1 -right-1 w-5 h-5 text-xs rounded-full bg-red-500 center-position z-10">
             {requests.length}
           </span>
         )}
-        <h1 className="font-semibold">{UserFirstLetter}</h1>
+        <div className="w-full h-full rounded-full overflow-hidden bg-blue-600 text-white center-position">
+          {user.profilePicture ? (
+          <Image
+            src={user.profilePicture}
+            alt={UserFirstLetter}
+            fill
+            className="object-cover rounded-full"
+          />
+        ) : (
+          <h1 className="font-semibold">{UserFirstLetter}</h1>
+        )}
+        </div>
       </div>
       {showDropdown && (
         <div
@@ -45,14 +57,27 @@ const ProfileDropdown = () => {
           ref={dropdownRef}
         >
           <ul className="whitespace-nowrap py-1 text-sm text-gray-700">
-            <li className="cursor-pointer px-4 py-2 hover:bg-gray-100" onClick={()=> handlePageChange('/profile/me')}>Profile</li>
+            <li
+              className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+              onClick={() => handlePageChange("/profile/me")}
+            >
+              Profile
+            </li>
             <li
               className="cursor-pointer flex gap-1 py-2 px-4 hover:bg-gray-100"
               onClick={() => handlePageChange("/requests")}
             >
-              <span>Requests</span> {requests.length !== 0 && <span className="w-5 h-5 text-xs rounded-full bg-red-500 text-white center-position">{requests.length}</span>}
+              <span>Requests</span>{" "}
+              {requests.length !== 0 && (
+                <span className="w-5 h-5 text-xs rounded-full bg-red-500 text-white center-position">
+                  {requests.length}
+                </span>
+              )}
             </li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600" onClick={logout}>
+            <li
+              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+              onClick={logout}
+            >
               Log out
             </li>
           </ul>

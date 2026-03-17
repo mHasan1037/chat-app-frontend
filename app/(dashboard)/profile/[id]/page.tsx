@@ -59,15 +59,14 @@ const UserProfile = () => {
             {({ open }) => (
               <div
                 onClick={() => open()}
-                className="relative w-[60px] h-[60px] group cursor-pointer"
+                className="relative w-[60px] h-[60px] group cursor-pointer rounded-full overflow-hidden"
               >
                 <Image
                   key={profile.profilePicture}
                   src={profile.profilePicture ? profile.profilePicture : "/profile_pic.png"}
                   alt="Profile"
-                  width={60}
-                  height={60}
-                  className="rounded-full object-cover"
+                  fill
+                  className="object-cover"
                 />
 
                 <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
