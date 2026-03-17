@@ -39,9 +39,9 @@ const ProfileDropdown = () => {
           </span>
         )}
         <div className="w-full h-full rounded-full overflow-hidden bg-blue-600 text-white center-position">
-          {user.profilePicture ? (
+          {user?.profilePicture ? (
           <Image
-            src={user.profilePicture}
+            src={user?.profilePicture}
             alt={UserFirstLetter}
             fill
             className="object-cover rounded-full"
