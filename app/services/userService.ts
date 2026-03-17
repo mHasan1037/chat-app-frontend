@@ -9,3 +9,11 @@ export const getUserProfile = async (id: string) => {
   const res = await api.get(`/users/${id}`);
   return res.data;
 };
+
+export const updateProfilePicture = async (image: {
+  url: string;
+  public_id: string;
+}) =>{
+  const res = await api.patch('/users/profile-picture', image);
+  return res.data;
+}
