@@ -15,17 +15,33 @@ const ProfilePostPic = ({ userId }: { userId: string }) => {
     <div>
       <div>
         <div className="flex gap-3 mb-3">
-          <button onClick={() => setActiveTab("posts")} className={`${activeTab === 'posts' && 'action-btn btn-primary'} cursor-pointer `}>Post</button>
-          <button onClick={() => setActiveTab("photos")} className={`${activeTab === 'photos' && 'action-btn btn-primary'} cursor-pointer `}>Photos</button>
+          <button
+            onClick={() => setActiveTab("posts")}
+            className={`${activeTab === "posts" && "action-btn btn-primary"} cursor-pointer `}
+          >
+            Post
+          </button>
+          <button
+            onClick={() => setActiveTab("photos")}
+            className={`${activeTab === "photos" && "action-btn btn-primary"} cursor-pointer `}
+          >
+            Photos
+          </button>
         </div>
         <div>
           {activeTab === "posts" && (
-            <div  className="flex flex-col gap-5 w-full">
+            <div className="flex flex-col gap-5 w-full">
               {profile.isMe && <CreatePost />}
               <ProfilePosts userId={profile._id} />
             </div>
           )}
-          {activeTab === "photos" && <ProfilePicTab profilePic={profile.allProfilePictures}/>}
+          {activeTab === "photos" &&
+            (profile.allProfilePictures &&
+            profile.allProfilePictures.length > 0 ? (
+              <ProfilePicTab profilePic={profile.allProfilePictures} />
+            ) : (
+              <p className="text-gray-500">No photos</p>
+            ))}
         </div>
       </div>
     </div>

@@ -3,11 +3,7 @@ import { useUserPosts } from "../hooks/useUserPosts";
 import PostItem from "./PostItem";
 import { useAuthUser } from "../hooks/useAuthUser";
 
-const ProfilePosts = ({
-  userId,
-}: {
-  userId: string;
-}) => {
+const ProfilePosts = ({ userId }: { userId: string }) => {
   const {
     data: allPosts,
     fetchNextPage,
@@ -35,16 +31,25 @@ const ProfilePosts = ({
   }, [fetchNextPage, hasNextPage]);
 
   if (status === "pending") return <p>Loading posts...</p>;
+  const hasPosts = allPosts?.pages?.some((page) => page.posts?.length > 0);
 
   return (
     <div className="space-y-4">
-      {allPosts?.pages.map((page, pageIndex) => (
-        <div key={pageIndex} className="space-y-4">
-          {page.posts.map((post: any) => (
-            <PostItem key={post._id} post={post} canEdit={myUserId === post.author?._id}/>
-          ))}
-        </div>
-      ))}
+      {hasPosts ? (
+        allPosts?.pages.map((page, pageIndex) => (
+          <div key={pageIndex} className="space-y-4">
+            {page.posts.map((post: any) => (
+              <PostItem
+                key={post._id}
+                post={post}
+                canEdit={myUserId === post.author?._id}
+              />
+            ))}
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">No posts</p>
+      )}
       {hasNextPage && (
         <div ref={observerRef}>
           {isFetchingNextPage && <p>Loading more...</p>}
