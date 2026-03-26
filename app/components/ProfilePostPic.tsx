@@ -15,8 +15,8 @@ const ProfilePostPic = ({ userId }: { userId: string }) => {
     <div>
       <div>
         <div className="flex gap-3 mb-3">
-          <button onClick={() => setActiveTab("posts")} className="action-btn btn-primary">Post</button>
-          <button onClick={() => setActiveTab("photos")} className="action-btn btn-primary">Photos</button>
+          <button onClick={() => setActiveTab("posts")} className={`${activeTab === 'posts' && 'action-btn btn-primary'} cursor-pointer `}>Post</button>
+          <button onClick={() => setActiveTab("photos")} className={`${activeTab === 'photos' && 'action-btn btn-primary'} cursor-pointer `}>Photos</button>
         </div>
         <div>
           {activeTab === "posts" && (
