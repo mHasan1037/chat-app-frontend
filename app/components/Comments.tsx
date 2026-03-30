@@ -3,11 +3,17 @@ import { useComments } from "../hooks/useComments";
 import { useCreateComment } from "../hooks/useCreateComment";
 import { HiDotsHorizontal } from "react-icons/hi";
 import useClickOutside from "../hooks/useClickOutside";
+import { useDeleteComment } from "../hooks/useDeleteComment";
 
-const Comments = ({ postId }: { postId: string }) => {
+interface CommentsProps{
+  postId: string;
+}
+
+const Comments = ({ postId }: CommentsProps) => {
   const [text, setText] = useState("");
   const { data: allComments, fetchNextPage, hasNextPage } = useComments(postId);
   const { mutate, isPending } = useCreateComment(postId);
+  const { mutate: deleteComment } = useDeleteComment(postId)
   const [openCommentActionId, setOpenCommentActionId] = useState<string | null>(
     null,
   );
@@ -20,6 +26,10 @@ const Comments = ({ postId }: { postId: string }) => {
     mutate(text);
     setText("");
   };
+
+  const handleCommentEdit = (id: string) =>{
+    console.log('id is', id)
+  }
 
   return (
     <div className="space-y-2 mt-2">
@@ -48,7 +58,7 @@ const Comments = ({ postId }: { postId: string }) => {
             <p className="w-[97%] bg-neutral-100 p-1 rounded-sm">
               <b>{c.author.name}</b>: {c.content}
             </p>
-            <div ref={dropdownRef} className="relative shrink-0">
+            <div className="relative shrink-0">
               <HiDotsHorizontal
                 onClick={() =>
                   setOpenCommentActionId(
@@ -59,11 +69,17 @@ const Comments = ({ postId }: { postId: string }) => {
               />
 
               {openCommentActionId === c._id && (
-                <div className="absolute left-0 top-full mt-2 w-20 rounded-md border border-gray-200 bg-white shadow-lg z-20">
-                  <button className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100">
+                <div ref={dropdownRef} className="absolute left-0 top-full mt-2 w-20 rounded-md border border-gray-200 bg-white shadow-lg z-20">
+                  <button
+                    className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                    onClick={() => handleCommentEdit(c._id)}
+                  >
                     Edit
                   </button>
-                  <button className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100">
+                  <button
+                    className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                    onClick={() => deleteComment(c._id)}
+                  >
                     Delete
                   </button>
                 </div>
