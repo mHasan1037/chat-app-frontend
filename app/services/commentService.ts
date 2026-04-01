@@ -23,3 +23,19 @@ export const getComments = async ({
   });
   return res.data;
 };
+
+export const deleteComment = async (commentId: string) => {
+  const res = await api.delete(`/comments/${commentId}`);
+  return res.data;
+};
+
+export const editComment = async ({
+  commentId,
+  content,
+}: {
+  commentId: string;
+  content: string;
+}) => {
+  const res = await api.put(`/comments/${commentId}`, {content});
+  return res.data;
+};
