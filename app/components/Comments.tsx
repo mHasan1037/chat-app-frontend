@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useComments } from "../hooks/useComments";
 import { useCreateComment } from "../hooks/useCreateComment";
-import { HiDotsHorizontal } from "react-icons/hi";
 import useClickOutside from "../hooks/useClickOutside";
 import { useDeleteComment } from "../hooks/useDeleteComment";
 import CommentInputBox from "./CommentInputBox";
 import { useEditComment } from "../hooks/useEditComment";
+import ActionDropdown from "./ActionDropdown";
 
 interface CommentsProps {
   postId: string;
@@ -81,36 +81,22 @@ const Comments = ({ postId }: CommentsProps) => {
                   <p className="w-[97%] bg-neutral-100 p-1 rounded-sm">
                     <b>{c.author.name}</b>: {c.content}
                   </p>
-                  <div className="relative shrink-0">
-                    <HiDotsHorizontal
-                      onClick={() =>
-                        setOpenCommentActionId(
-                          openCommentActionId === c._id ? null : c._id,
-                        )
-                      }
-                      className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    />
-
-                    {openCommentActionId === c._id && (
-                      <div
-                        ref={dropdownRef}
-                        className="absolute left-0 top-full mt-2 w-20 rounded-md border border-gray-200 bg-white shadow-lg z-20"
-                      >
-                        <button
-                          className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
-                          onClick={() => handleCommentEdit(c._id, c.content)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="cursor-pointer block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
-                          onClick={() => deleteComment(c._id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                  <ActionDropdown
+                    itemId={c._id}
+                    openId={openCommentActionId}
+                    setOpenId={setOpenCommentActionId}
+                    actions={[
+                      {
+                        label: "Edit",
+                        onClick: () => handleCommentEdit(c._id, c.content),
+                      },
+                      {
+                        label: "Delete",
+                        onClick: () => deleteComment(c._id),
+                      },
+                    ]}
+                    className={{container: "opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"}}
+                  />
                 </>
               )}
             </div>
