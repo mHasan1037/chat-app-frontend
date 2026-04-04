@@ -18,9 +18,9 @@ const ProfilePicTab = ({ profilePic }: profilePicType) => {
   const {mutate: setActiveProfilePicture, isPending: isPictureSetPending} = useSetActiveProfilePicture();
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
       {profilePic.map((img) => (
-        <div key={img.public_id} className="relative group">
+        <div key={img.public_id} className="relative group break-inside-avoid">
           <ActionDropdown
             itemId={img.public_id}
             openId={openPictureActionId}
@@ -30,15 +30,16 @@ const ProfilePicTab = ({ profilePic }: profilePicType) => {
               { label: "Delete", onClick: () => deleteImage(img.public_id) },
             ]}
             className={{
-              container: "absolute text-white top-1 right-1 z-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
+              container: "absolute text-white top-2 right-2 z-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
             }}
           />
           <Image
             key={img.public_id}
             src={img.url}
             alt="Profile"
-            height={200}
-            width={200}
+            height={500}
+            width={500}
+            className="w-full h-auto rounded-lg"
           />
         </div>
       ))}
