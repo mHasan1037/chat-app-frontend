@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ActionDropdown from "./ActionDropdown";
 import { useDeleteProfilePicture } from "../hooks/useDeleteProfilePicture";
+import { useSetActiveProfilePicture } from "../hooks/useSetActiveProfilePicture";
 
 interface profilePicType {
   profilePic: {
@@ -13,7 +14,8 @@ interface profilePicType {
 
 const ProfilePicTab = ({ profilePic }: profilePicType) => {
   const [openPictureActionId, setOpenPictureActionId] = useState<string | null>(null);
-  const { mutate: deleteImage } = useDeleteProfilePicture();
+  const { mutate: deleteImage, isPending: isPictureDeletePending } = useDeleteProfilePicture();
+  const {mutate: setActiveProfilePicture, isPending: isPictureSetPending} = useSetActiveProfilePicture();
 
   return (
     <div className="flex flex-wrap gap-3">
@@ -24,7 +26,7 @@ const ProfilePicTab = ({ profilePic }: profilePicType) => {
             openId={openPictureActionId}
             setOpenId={setOpenPictureActionId}
             actions={[
-              { label: "Set as Profile", onClick: () => console.log(img) },
+              { label: "Set as Profile", onClick: () => setActiveProfilePicture({public_id: img.public_id}) },
               { label: "Delete", onClick: () => deleteImage(img.public_id) },
             ]}
             className={{

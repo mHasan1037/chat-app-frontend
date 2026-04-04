@@ -21,4 +21,9 @@ export const updateProfilePicture = async (image: {
 export const deleteProfilePicture = async (public_id: string) =>{
   const res = await api.delete(`/users/profile-picture/${public_id}`);
   return res.data;
+};
+
+export const setActiveProfilePicture = async ({ public_id }: { public_id: string }) =>{
+  const res = await api.patch('/users/set-active-profile-picture', {public_id});
+  return res.data;
 }
