@@ -38,7 +38,7 @@ const ProfilePostPic = ({ userId }: { userId: string }) => {
           {activeTab === "photos" &&
             (profile.allProfilePictures &&
             profile.allProfilePictures.length > 0 ? (
-              <ProfilePicTab profilePic={profile.allProfilePictures} />
+              <ProfilePicTab userProfilePic={profile.allProfilePictures} userProfileId={profile._id} />
             ) : (
               <p className="text-gray-500">No photos</p>
             ))}
