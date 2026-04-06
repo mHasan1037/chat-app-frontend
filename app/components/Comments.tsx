@@ -6,12 +6,16 @@ import { useDeleteComment } from "../hooks/useDeleteComment";
 import CommentInputBox from "./CommentInputBox";
 import { useEditComment } from "../hooks/useEditComment";
 import ActionDropdown from "./ActionDropdown";
+import { useAuthUser } from "../hooks/useAuthUser";
+import { useUserProfile } from "../hooks/useUserProfile";
 
 interface CommentsProps {
   postId: string;
 }
 
 const Comments = ({ postId }: CommentsProps) => {
+  const myUserId = useAuthUser().data?._id;
+  const { data: profile } = useUserProfile(myUserId);
   const [text, setText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
@@ -81,22 +85,27 @@ const Comments = ({ postId }: CommentsProps) => {
                   <p className="w-[97%] bg-neutral-100 p-1 rounded-sm">
                     <b>{c.author.name}</b>: {c.content}
                   </p>
-                  <ActionDropdown
-                    itemId={c._id}
-                    openId={openCommentActionId}
-                    setOpenId={setOpenCommentActionId}
-                    actions={[
-                      {
-                        label: "Edit",
-                        onClick: () => handleCommentEdit(c._id, c.content),
-                      },
-                      {
-                        label: "Delete",
-                        onClick: () => deleteComment(c._id),
-                      },
-                    ]}
-                    className={{container: "opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"}}
-                  />
+                  {profile?._id ===  c.author._id && (
+                    <ActionDropdown
+                      itemId={c._id}
+                      openId={openCommentActionId}
+                      setOpenId={setOpenCommentActionId}
+                      actions={[
+                        {
+                          label: "Edit",
+                          onClick: () => handleCommentEdit(c._id, c.content),
+                        },
+                        {
+                          label: "Delete",
+                          onClick: () => deleteComment(c._id),
+                        },
+                      ]}
+                      className={{
+                        container:
+                          "opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
+                      }}
+                    />
+                  )}
                 </>
               )}
             </div>

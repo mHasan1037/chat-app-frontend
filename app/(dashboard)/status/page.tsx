@@ -3,7 +3,6 @@ import CreatePost from '@/app/components/CreatePost'
 import PostItem from '@/app/components/PostItem';
 import { useAuthUser } from '@/app/hooks/useAuthUser';
 import { useFeedPosts } from '@/app/hooks/useFeedPosts'
-import { useUserProfile } from '@/app/hooks/useUserProfile';
 import React, { useEffect, useRef } from 'react'
 
 const StatusPage = () => {
