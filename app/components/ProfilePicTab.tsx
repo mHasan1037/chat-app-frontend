@@ -36,8 +36,10 @@ const ProfilePicTab = ({ userProfilePic, userProfileId }: profilePicType) => {
               actions={[
                 {
                   label: "Set as Profile",
-                  onClick: () =>
-                    setActiveProfilePicture({ public_id: img.public_id }),
+                  onClick: () =>{
+                    setOpenPictureActionId(null);
+                    setActiveProfilePicture({ public_id: img.public_id })
+                  },
                 },
                 { label: "Delete", onClick: () => deleteImage(img.public_id) },
               ]}

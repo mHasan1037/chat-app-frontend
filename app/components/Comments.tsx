@@ -83,7 +83,7 @@ const Comments = ({ postId }: CommentsProps) => {
                   <p className="w-[97%] bg-neutral-100 p-1 rounded-sm">
                     <b>{c.author.name}</b>: {c.content}
                   </p>
-                  {myUserId ===  c.author._id && (
+                  {myUserId === c.author._id && (
                     <ActionDropdown
                       itemId={c._id}
                       openId={openCommentActionId}
@@ -91,11 +91,17 @@ const Comments = ({ postId }: CommentsProps) => {
                       actions={[
                         {
                           label: "Edit",
-                          onClick: () => handleCommentEdit(c._id, c.content),
+                          onClick: () => {
+                            handleCommentEdit(c._id, c.content);
+                            setOpenCommentActionId(null);
+                          },
                         },
                         {
                           label: "Delete",
-                          onClick: () => deleteComment(c._id),
+                          onClick: () => {
+                            (deleteComment(c._id),
+                              setOpenCommentActionId(null));
+                          },
                         },
                       ]}
                       className={{
