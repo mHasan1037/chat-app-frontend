@@ -10,18 +10,18 @@ import { useRouter } from "next/navigation";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try{
-       const data = await loginUser({email, password});
-       localStorage.setItem('token', data.token);
-       router.push('/chats');
-    }catch(error: any){
-       console.log(error.response?.data?.message)
-       toast.info("Incorrect information")
+
+    try {
+      const data = await loginUser({ email, password });
+      localStorage.setItem("token", data.token);
+      router.push("/chats");
+    } catch (error: any) {
+      console.log(error.response?.data?.message);
+      toast.info("Incorrect information");
     }
   };
 
@@ -47,9 +47,18 @@ const LoginPage = () => {
           />
           <AuthButton title="Login" />
         </form>
-        <p className="text-center mt-4 text-sm">
-          Don't have an account? <Link href="/register" className="text-blue-600 font-medium hover:underline">Create one</Link>
-        </p>
+        <div className="text-center mt-4 text-sm flex flex-col gap-2">
+          <Link href="/recoverAccount" className="cursor-pointer hover:underline hover:text-blue-600">Forgot Password?</Link>
+          <p>
+            Don't have an account?{" "}
+            <Link
+              href="/register"
+              className="text-blue-600 font-medium hover:underline"
+            >
+              Create one
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

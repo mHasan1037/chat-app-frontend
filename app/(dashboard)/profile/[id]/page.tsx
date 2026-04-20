@@ -153,7 +153,7 @@ const UserProfile = () => {
             {usersFriends?.map((friend) => (
               <div key={friend._id}>
                 <p
-                  className="whitespace-nowrap cursor-pointer"
+                  className="whitespace-nowrap cursor-pointer hover:text-blue-600"
                   onClick={() => handleFriendProfile(friend._id)}
                 >
                   {friend.name}
