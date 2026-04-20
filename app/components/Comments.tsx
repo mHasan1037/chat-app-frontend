@@ -99,8 +99,8 @@ const Comments = ({ postId }: CommentsProps) => {
                         {
                           label: "Delete",
                           onClick: () => {
-                            (deleteComment(c._id),
-                              setOpenCommentActionId(null));
+                            deleteComment(c._id);
+                            setOpenCommentActionId(null);
                           },
                         },
                       ]}

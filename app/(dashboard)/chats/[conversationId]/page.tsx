@@ -52,7 +52,14 @@ const chatPage = () => {
     getConversationById(conversationId).then(setConversation);
 
     const handleNewMessage = (message: any) => {
-      setMessages((prev) => [...prev, message]);
+      const normalized = {
+        ...message,
+        sender: 
+         typeof message.sender === 'string'
+            ? {_id: message.sender}
+            : message.sender,
+      };
+      setMessages((prev) => [...prev, normalized]);
     };
 
     socket.off("newMessage", handleNewMessage);
