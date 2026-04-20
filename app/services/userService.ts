@@ -19,7 +19,7 @@ export const updateProfilePicture = async (image: {
 };
 
 export const deleteProfilePicture = async (public_id: string) =>{
-  const res = await api.delete(`/users/profile-picture/${public_id}`);
+  const res = await api.delete(`/users/profile-picture/${encodeURIComponent(public_id)}`);
   return res.data;
 };
 
