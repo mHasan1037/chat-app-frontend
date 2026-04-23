@@ -4,13 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import AuthButton from "@/app/components/AuthButton";
 import AuthInput from "@/app/components/AuthInput";
+import { sendResetPasswordEmail } from "@/app/services/authService";
+import { toast } from "react-toastify";
 
 export default function RecoverAccount() {
   const [email, setEmail] = useState("");
 
-  const handleRecover = (e: React.FormEvent) => {
+  const handleRecover = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Recovery email submitted:", email);
+    try {
+      await sendResetPasswordEmail(email);
+      setEmail("");
+      toast.success("Check your email");
+    } catch (err: any) {
+      const message = err?.response?.data?.message || "Something went wrong. Try again.";
+      toast.error(message);
+    }
   };
 
   return (
@@ -35,7 +44,10 @@ export default function RecoverAccount() {
         <div className="text-center mt-4 text-sm">
           <p>
             Remember your password?{" "}
-            <Link href="/login" className="text-blue-600 font-medium hover:underline">
+            <Link
+              href="/login"
+              className="text-blue-600 font-medium hover:underline"
+            >
               Login
             </Link>
           </p>
