@@ -51,5 +51,9 @@ body {
   @apply px-6 py-4 space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6;
 }
 
+@utility blue-background{
+  @apply bg-blue-500;
+}
+
 
 
