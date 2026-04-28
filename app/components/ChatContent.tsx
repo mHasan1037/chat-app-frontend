@@ -13,7 +13,7 @@ const ChatContent = ({ content }: ContentProps) => {
     <div
       key={content._id}
       className={`max-w-xs p-2 rounded ${
-        content.isMe ? "ml-auto bg-blue-500 text-white" : "bg-gray-200"
+        content.isMe ? "ml-auto blue-background text-white" : "bg-gray-200"
       }`}
     >
       {content.content}

@@ -29,7 +29,7 @@ const ChatInput = ({ onSend }: ChatInputProps) => {
       />
       <button
         onClick={handleSend}
-        className="ml-2 bg-blue-600 text-white px-4 rounded"
+        className="ml-2 blue-background text-white px-4 rounded"
       >
         Send
       </button>
