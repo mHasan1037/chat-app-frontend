@@ -1,11 +1,11 @@
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { use } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoMdInformationCircle } from "react-icons/io";
 
 interface ChatHeaderProps {
   user: {
-    _id: string;
+    _id?: string;
     name: string;
   };
 }
@@ -20,14 +20,18 @@ const ChatHeader = ({ user }: ChatHeaderProps) => {
         </button>
         <h3
           className="cursor-pointer"
-          onClick={() => router.push(`/profile/${user._id}`)}
+          onClick={() => {
+            if (user._id) router.push(`/profile/${user._id}`);
+          }}
         >
           {user?.name}
         </h3>
       </div>
-      <div className="flex gap-2">
-        <IoMdInformationCircle />
-      </div>
+      {user?._id && (
+        <div className="flex gap-2">
+          <IoMdInformationCircle />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,9 +1,12 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 const AIChatIcon = () => {
+  const router = useRouter();
 
   const aiButtonClick = () =>{
-     console.log('the ai is running')
+     router.push(`/chats/ai`)
   };
 
   return (
