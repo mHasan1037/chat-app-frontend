@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "./providers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AIChatIcon from "./components/AIChatIcon";
 
 
 export const metadata: Metadata = {
@@ -21,7 +20,6 @@ export default function RootLayout({
       <body>
         <Providers>{children}</Providers>
         <ToastContainer position="bottom-left" autoClose={3000} />
-        <AIChatIcon />
       </body>
     </html>
   );
