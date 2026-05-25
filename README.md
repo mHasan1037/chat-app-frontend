@@ -1,8 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💬 Chat App Frontend
 
-## Getting Started
+A real-time chat application built with **Next.js**, **TypeScript**, and **Socket.IO**. Supports live messaging, markdown rendering, image uploads via Cloudinary, and state management with Zustand.
 
-First, run the development server:
+🔗 **Live Demo:** [chat-app-frontend-eight-woad.vercel.app](https://chat-app-frontend-eight-woad.vercel.app)
+
+---
+
+## 🚀 Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | Next.js 16 |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Real-time | Socket.IO Client |
+| State Management | Zustand |
+| Data Fetching | TanStack React Query + Axios |
+| Image Uploads | Next Cloudinary |
+| Markdown | React Markdown + Rehype Highlight |
+| Notifications | React Toastify |
+| Icons | React Icons |
+
+---
+
+## ✨ Features
+
+- **Real-time messaging** powered by Socket.IO
+- **Markdown support** in chat messages with syntax highlighting
+- **Image uploads** via Cloudinary
+- **Global state management** with Zustand
+- **Server state & caching** with TanStack React Query
+- **Toast notifications** for user feedback
+- **Fully typed** with TypeScript
+
+---
+
+## 📁 Project Structure
+
+```
+chat-app-frontend/
+├── app/               # Next.js App Router (pages, layouts, components)
+├── public/            # Static assets
+├── next.config.ts     # Next.js configuration
+├── tailwind.config    # Tailwind CSS configuration
+├── tsconfig.json      # TypeScript configuration
+├── eslint.config.mjs  # ESLint configuration
+└── package.json
+```
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+```bash
+git clone https://github.com/mHasan1037/chat-app-frontend.git
+cd chat-app-frontend
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory and add the required variables:
+
+```env
+NEXT_PUBLIC_API_URL=your_backend_api_url
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+# Add any other required environment variables
+```
+
+### Running the Development Server
 
 ```bash
 npm run dev
@@ -14,23 +87,40 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Available Scripts
 
-## Learn More
+| Script | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚢 Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is deployed on **Vercel**. To deploy your own instance:
 
-## Deploy on Vercel
+1. Push the repository to GitHub.
+2. Import the project on [Vercel](https://vercel.com).
+3. Set the required environment variables in the Vercel dashboard.
+4. Deploy!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For more details, see the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+---
+
+## 📄 License
+
+This project is open source. See the repository for more details.
