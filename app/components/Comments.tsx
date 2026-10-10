@@ -53,7 +53,7 @@ const Comments = ({ postId }: CommentsProps) => {
   };
 
   return (
-    <div className="space-y-2 mt-2">
+    <div className="mt-4 space-y-3 rounded-2xl bg-slate-50/80 p-3">
       <CommentInputBox
         text={text}
         isPending={isPending}
@@ -67,7 +67,7 @@ const Comments = ({ postId }: CommentsProps) => {
           return (
             <div
               key={c._id}
-              className="text-sm flex items-center justify-between gap-1 group"
+              className="group flex items-center justify-between gap-2 text-sm"
             >
               {isEditing ? (
                 <div className="w-full">
@@ -80,8 +80,8 @@ const Comments = ({ postId }: CommentsProps) => {
                 </div>
               ) : (
                 <>
-                  <p className="w-[97%] bg-neutral-100 p-1 rounded-sm">
-                    <b>{c.author.name}</b>: {c.content}
+                  <p className="w-[97%] rounded-2xl bg-white px-3 py-2 leading-6 text-slate-700 shadow-sm">
+                    <b className="text-slate-950">{c.author.name}</b>: {c.content}
                   </p>
                   {myUserId === c.author._id && (
                     <ActionDropdown
@@ -106,7 +106,7 @@ const Comments = ({ postId }: CommentsProps) => {
                       ]}
                       className={{
                         container:
-                          "opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
+                          "rounded-full p-1 text-slate-400 opacity-0 transition hover:bg-white hover:text-slate-700 group-hover:opacity-100 cursor-pointer",
                       }}
                     />
                   )}
@@ -118,7 +118,7 @@ const Comments = ({ postId }: CommentsProps) => {
       )}
 
       {hasNextPage && (
-        <button onClick={() => fetchNextPage()} className="text-xs">
+        <button onClick={() => fetchNextPage()} className="text-xs font-bold text-blue-600">
           Load more
         </button>
       )}

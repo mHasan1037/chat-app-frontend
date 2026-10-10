@@ -14,9 +14,9 @@ const ChatInput = ({ onSend }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex p-3 border-t border-color">
+    <div className="flex gap-3 border-t border-white/70 bg-white/80 p-3 backdrop-blur-xl">
       <input
-        className="flex-1 border rounded px-3 py-2 border-color"
+        className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-inner outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => {
@@ -29,7 +29,7 @@ const ChatInput = ({ onSend }: ChatInputProps) => {
       />
       <button
         onClick={handleSend}
-        className="ml-2 blue-background text-white px-4 rounded"
+        className="btn-primary rounded-full px-5 text-sm font-bold"
       >
         Send
       </button>

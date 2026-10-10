@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AuthButton = ({ title, onClick, type = "submit" }: Props) => {
-  return <button type={type} onClick={onClick} className="btn-primary w-full py-2 rounded-lg font-semibold text-white">{title}</button>;
+  return <button type={type} onClick={onClick} className="btn-primary w-full rounded-full py-3 font-bold text-white">{title}</button>;
 };
 
 export default AuthButton;

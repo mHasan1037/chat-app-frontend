@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import React, { use } from "react";
+import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoMdInformationCircle } from "react-icons/io";
 
@@ -13,23 +13,23 @@ interface ChatHeaderProps {
 const ChatHeader = ({ user }: ChatHeaderProps) => {
   const router = useRouter();
   return (
-    <div className="flex justify-between bg-white p-2 border-b border-color">
-      <div className="flex gap-3">
-        <button className="cursor-pointer">
+    <div className="flex items-center justify-between border-b border-white/70 bg-white/80 px-4 py-3 backdrop-blur-xl">
+      <div className="flex items-center gap-3">
+        <button className="center-position h-9 w-9 cursor-pointer rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-600">
           <FaArrowLeft onClick={() => router.back()} />
         </button>
-        <h3
+        <div
           className="cursor-pointer"
           onClick={() => {
             if (user._id) router.push(`/profile/${user._id}`);
           }}
         >
-          {user?.name}
-        </h3>
+          <h3 className="font-bold text-slate-950">{user?.name}</h3>
+        </div>
       </div>
       {user?._id && (
-        <div className="flex gap-2">
-          <IoMdInformationCircle />
+        <div className="center-position h-9 w-9 rounded-full bg-slate-100 text-slate-500">
+          <IoMdInformationCircle size={20} />
         </div>
       )}
     </div>

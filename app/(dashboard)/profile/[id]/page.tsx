@@ -20,9 +20,9 @@ const UserProfile = () => {
   const friendMutation = useFriendMutations();
   const router = useRouter();
 
-  if (isLoading || friendsLoading) return <p>Loading profile...</p>;
-  if (isError || !profile) return <p>User not found</p>;
-  if (isPending) return <p>Loading...</p>;
+  if (isLoading || friendsLoading) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading profile...</p>;
+  if (isError || !profile) return <p className="py-10 text-center text-sm font-medium text-slate-500">User not found</p>;
+  if (isPending) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading...</p>;
 
   const handleFriendProfile = async (id: string) => {
     router.push(`/profile/${id}`);
@@ -40,10 +40,10 @@ const UserProfile = () => {
   return (
     <div
       key={profile._id}
-      className="space-y-4 max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6 flex items-start gap-10"
+      className="main-content-border flex max-w-5xl flex-col gap-6 lg:flex-row lg:items-start"
     >
-      <div>
-        <div className="flex flex-col items-center">
+      <div className="w-full rounded-2xl border border-white/70 bg-white/75 p-5 shadow-lg shadow-slate-900/5 lg:max-w-xs">
+        <div className="flex flex-col items-center text-center">
           <CldUploadWidget
             uploadPreset={
               process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || ""
@@ -58,7 +58,7 @@ const UserProfile = () => {
             {({ open }) => (
               <div
                 onClick={() => open()}
-                className="relative w-[60px] h-[60px] group cursor-pointer rounded-full overflow-hidden"
+                className="group relative h-28 w-28 cursor-pointer overflow-hidden rounded-3xl ring-4 ring-white shadow-2xl shadow-blue-500/15"
               >
                 <Image
                   key={profile.profilePicture}
@@ -72,18 +72,18 @@ const UserProfile = () => {
                   className="object-cover"
                 />
 
-                <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <CiEdit size={26} className="text-white font-bold" />
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-950/45 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                  <CiEdit size={30} className="font-bold text-white" />
                 </div>
               </div>
             )}
           </CldUploadWidget>
-          <h1 className="text-lg font-semibold whitespace-nowrap">
+          <h1 className="mt-4 text-2xl font-black text-slate-950">
             {profile.name}
           </h1>
         </div>
         {!profile.isMe && (
-          <div>
+          <div className="mt-5 flex justify-center">
             {!profile.isFriend &&
               !profile.isIncomingRequest &&
               !profile.isOutgoingRequest && (
@@ -148,22 +148,26 @@ const UserProfile = () => {
           </div>
         )}
         {usersFriends?.length !== 0 && (
-          <div className="my-5">
-            <h1 className="text-lg font-bold">Friends</h1>
-            {usersFriends?.map((friend) => (
-              <div key={friend._id}>
-                <p
-                  className="whitespace-nowrap cursor-pointer hover:text-blue-600"
-                  onClick={() => handleFriendProfile(friend._id)}
-                >
-                  {friend.name}
-                </p>
-              </div>
-            ))}
+          <div className="mt-6 border-t border-slate-200/80 pt-5">
+            <h1 className="mb-3 text-sm font-black uppercase tracking-wide text-slate-500">Friends</h1>
+            <div className="space-y-2">
+              {usersFriends?.map((friend) => (
+                <div key={friend._id}>
+                  <p
+                    className="cursor-pointer truncate rounded-xl px-3 py-2 font-semibold text-slate-700 transition hover:bg-white hover:text-blue-600"
+                    onClick={() => handleFriendProfile(friend._id)}
+                  >
+                    {friend.name}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
-      <ProfilePostPic userId={userId} />
+      <div className="min-w-0 flex-1">
+        <ProfilePostPic userId={userId} />
+      </div>
     </div>
   );
 };

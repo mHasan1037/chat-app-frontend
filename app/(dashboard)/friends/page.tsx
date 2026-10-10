@@ -25,17 +25,21 @@ const FriendPage = () => {
 
   return (
     <div className="main-content-border">
+      <div>
+        <h1 className="text-2xl font-black text-slate-950">Connections</h1>
+        <p className="text-sm font-medium text-slate-500">Search, message, and manage your friends.</p>
+      </div>
       <input
         type="text"
         placeholder="Search Friends"
-        className="mb-3 border border-color rounded-md w-full p-1"
+        className="input-base"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
 
       {query.trim() ? (
         searchResults.length === 0 ? (
-          <p>No results found</p>
+          <p className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">No results found</p>
         ) : (
           <RandomUsers
             users={searchResults}
@@ -44,39 +48,46 @@ const FriendPage = () => {
           />
         )
       ) : friendsLoading ? (
-        <p>Loading friends...</p>
+        <p className="text-sm font-medium text-slate-500">Loading friends...</p>
       ) : friends.length === 0 ? (
-        <div>You have no friends.</div>
+        <div className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">You have no friends.</div>
       ) : (
-        friends.map((friend) => (
-          <div
-            key={friend._id}
-            className="flex justify-between gap-1 hover:bg-gray-50 mb-1"
-          >
-            <p
-              onClick={() => handleFriendProfile(friend._id)}
-              className="cursor-pointer text-gray-800"
+        <div className="space-y-3">
+          {friends.map((friend) => (
+            <div
+              key={friend._id}
+              className="flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/70 p-3 shadow-sm transition hover:bg-white"
             >
-              {friend.name}
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleMessageUser(friend._id)}
-                className="action-btn action-btn-blue"
-              >
-                Message
-              </button>
-              <button
-                onClick={() =>
-                  friendMutation.mutate({ type: "UNFRIEND", id: friend._id! })
-                }
-                className="action-btn action-btn-red"
-              >
-                Unfriend
-              </button>
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="center-position h-12 w-12 shrink-0 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 text-base font-black text-white shadow-lg shadow-blue-500/20">
+                  {friend.name?.charAt(0)?.toUpperCase()}
+                </div>
+                <p
+                  onClick={() => handleFriendProfile(friend._id)}
+                  className="cursor-pointer truncate font-bold text-slate-800 hover:text-blue-600"
+                >
+                  {friend.name}
+                </p>
+              </div>
+              <div className="flex shrink-0 gap-2">
+                <button
+                  onClick={() => handleMessageUser(friend._id)}
+                  className="action-btn action-btn-blue"
+                >
+                  Message
+                </button>
+                <button
+                  onClick={() =>
+                    friendMutation.mutate({ type: "UNFRIEND", id: friend._id! })
+                  }
+                  className="action-btn action-btn-red"
+                >
+                  Unfriend
+                </button>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

@@ -27,11 +27,11 @@ const StatusPage = () => {
   }, [fetchNextPage, hasNextPage]);
 
   if(status === "pending"){
-    return <p className='text-center'>Loading feed...</p>
+    return <p className='py-10 text-center text-sm font-medium text-slate-500'>Loading feed...</p>
   };
 
   return (
-    <div className="main-content-border max-w-xl mx-auto space-y-4">
+    <div className="mx-auto my-6 max-w-xl space-y-4">
       <CreatePost />
 
       {feedPost?.pages.map((page, pageIndex) =>(
@@ -44,7 +44,7 @@ const StatusPage = () => {
 
       {hasNextPage && (
         <div ref={observerRef} className="flex justify-center py-4">
-            {isFetchingNextPage && <span className="text-sm text-gray-500">Loading more…</span>}
+            {isFetchingNextPage && <span className="text-sm font-medium text-slate-500">Loading more…</span>}
         </div>
       )}
     </div>

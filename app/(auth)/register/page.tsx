@@ -27,8 +27,11 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen center-position px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">Create Account</h1>
+      <div className="w-full max-w-md rounded-3xl border border-white/70 bg-white/80 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
+        <div className="mb-7 text-center">
+          <h1 className="text-3xl font-black text-slate-950">Create Account</h1>
+          <p className="mt-2 text-sm font-medium text-slate-500">Join Chat Time and start messaging.</p>
+        </div>
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <AuthInput
             label="Full Name"
@@ -52,8 +55,8 @@ const RegisterPage = () => {
           />
           <AuthButton title="Sign up" />
         </form>
-        <p className="text-center mt-4 text-sm">
-          Already have an account? <Link href="/login" className="text-blue-600 font-medium hover:underline">Login</Link>
+        <p className="mt-5 text-center text-sm font-medium text-slate-500">
+          Already have an account? <Link href="/login" className="font-bold text-blue-600 hover:underline">Login</Link>
         </p>
       </div>
     </div>

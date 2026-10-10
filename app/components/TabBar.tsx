@@ -12,25 +12,25 @@ const TabBar = () => {
   ];
 
   return (
-    <nav className="bg-white">
-      <div className="flex justify-center gap-8">
+    <nav className="sticky top-[73px] z-30 border-b border-white/60 bg-white/55 px-3 py-3 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-2xl justify-center gap-2 rounded-full border border-white/70 bg-white/70 p-1 shadow-lg shadow-slate-900/5">
         {tabs.map((t) => {
-        const active = pathname === t.href;
+          const active = pathname === t.href;
 
-        return (
-          <Link
-            key={t.id}
-            href={t.href}
-            className={`py-3 px-2 font-medium transition ${
-              active
-                ? "border-b-2 text-blue-600 border-blue-600"
-                : "text-gray-600 hover:text-blue-600"
-            }`}
-          >
-            {t.label}
-          </Link>
-        );
-      })}
+          return (
+            <Link
+              key={t.id}
+              href={t.href}
+              className={`rounded-full px-4 py-2 text-sm font-bold transition sm:px-6 ${
+                active
+                  ? "bg-slate-950 text-white shadow-md shadow-slate-900/20"
+                  : "text-slate-600 hover:bg-white hover:text-blue-600"
+              }`}
+            >
+              {t.label}
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

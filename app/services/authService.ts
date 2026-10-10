@@ -19,7 +19,6 @@ export const loginUser = async (data: {
 
 export const sendResetPasswordEmail = async (email: string) =>{
     const res = await api.post('/auth/reset-password-link', {email});
-    console.log('res', res.data)
     return res.data;
 }
 

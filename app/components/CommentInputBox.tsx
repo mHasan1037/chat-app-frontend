@@ -14,7 +14,7 @@ const CommentInputBox = ({text, isPending, setText, onSubmit}: CommentInputProps
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Write a comment..."
-        className="flex-1 border rounded p-1"
+        className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10"
       />
       <button
         className="action-btn action-btn-blue"

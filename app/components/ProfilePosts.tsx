@@ -30,7 +30,7 @@ const ProfilePosts = ({ userId }: { userId: string }) => {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage]);
 
-  if (status === "pending") return <p>Loading posts...</p>;
+  if (status === "pending") return <p className="text-sm font-medium text-slate-500">Loading posts...</p>;
   const hasPosts = allPosts?.pages?.some((page) => page.posts?.length > 0);
 
   return (
@@ -48,11 +48,11 @@ const ProfilePosts = ({ userId }: { userId: string }) => {
           </div>
         ))
       ) : (
-        <p className="text-gray-500">No posts</p>
+        <p className="rounded-2xl bg-white/70 p-6 text-center text-sm font-medium text-slate-500">No posts</p>
       )}
       {hasNextPage && (
         <div ref={observerRef}>
-          {isFetchingNextPage && <p>Loading more...</p>}
+          {isFetchingNextPage && <p className="text-sm font-medium text-slate-500">Loading more...</p>}
         </div>
       )}
     </div>

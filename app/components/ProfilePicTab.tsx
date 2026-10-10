@@ -25,9 +25,9 @@ const ProfilePicTab = ({ userProfilePic, userProfileId }: profilePicType) => {
     useSetActiveProfilePicture();
 
   return (
-    <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+    <div className="columns-1 gap-4 space-y-4 sm:columns-2 md:columns-3">
       {userProfilePic.map((img) => (
-        <div key={img.public_id} className="relative group break-inside-avoid">
+        <div key={img.public_id} className="group relative break-inside-avoid overflow-hidden rounded-2xl shadow-xl shadow-slate-900/10">
           {userProfileId === myUserId && (
             <ActionDropdown
               itemId={img.public_id}
@@ -45,7 +45,7 @@ const ProfilePicTab = ({ userProfilePic, userProfileId }: profilePicType) => {
               ]}
               className={{
                 container:
-                  "absolute text-white top-2 right-2 z-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer",
+                  "absolute right-3 top-3 z-50 rounded-full bg-slate-950/65 p-2 text-white opacity-0 transition hover:bg-slate-950 group-hover:opacity-100 cursor-pointer",
               }}
             />
           )}
@@ -56,7 +56,7 @@ const ProfilePicTab = ({ userProfilePic, userProfileId }: profilePicType) => {
             alt="Profile"
             height={500}
             width={500}
-            className="w-full h-auto rounded-lg"
+            className="h-auto w-full transition duration-300 group-hover:scale-[1.02]"
           />
         </div>
       ))}

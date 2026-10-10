@@ -41,7 +41,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 top-full mt-2 rounded-md border border-gray-200 bg-white shadow-lg z-20"
+          className="absolute right-0 top-full z-20 mt-2 overflow-hidden rounded-xl border border-white/70 bg-white/95 shadow-xl shadow-slate-900/10 backdrop-blur-xl"
         >
           {actions.map((action, idx) => (
             <button
@@ -49,7 +49,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
               onClick={() => {
                 action.onClick();
               }}
-              className="block w-full whitespace-nowrap text-left px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+              className="block w-full cursor-pointer whitespace-nowrap px-4 py-2.5 text-left text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
             >
               {action.label}
             </button>

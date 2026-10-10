@@ -10,8 +10,8 @@ interface Props{
 
 const AuthInput = ({label, type = "text", value, onChange, placeholder}: Props) => {
   return (
-    <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-600">{label}</label>
+    <div className="flex flex-col gap-2">
+        <label className="text-sm font-bold text-slate-600">{label}</label>
         <input 
           type={type}
           value={value}

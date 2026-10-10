@@ -40,12 +40,17 @@ const AIChat = () => {
   }));
 
   return (
-    <div className="flex flex-col h-[80vh] main-content-border">
+    <div className="main-content-border flex h-[78vh] max-w-3xl flex-col overflow-hidden p-0">
       <ChatHeader user={{ name: "AI Assistant" }} />
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div className="flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-slate-50/80 to-cyan-50/70 p-4 sm:p-5">
         {messagesWithIsMe.map((msg) => (
           <ChatContent key={msg._id} content={msg} />
         ))}
+        {isPending && (
+          <div className="mr-auto rounded-2xl rounded-bl-md border border-white/80 bg-white/90 px-4 py-2.5 text-sm font-medium text-slate-500 shadow-sm">
+            AI is thinking...
+          </div>
+        )}
       </div>
       <ChatInput onSend={handleSendMessage} />
     </div>

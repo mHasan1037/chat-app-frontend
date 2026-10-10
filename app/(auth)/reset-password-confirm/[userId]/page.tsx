@@ -56,15 +56,15 @@ const ResetPassword = () => {
   const strength = getStrength(password);
 
   return (
-    <div className="min-h-screen center-position">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+    <div className="min-h-screen center-position px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/70 bg-white/80 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
 
         {/* Lock icon */}
         <div className="flex justify-center mb-4">
-          <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-blue-50 shadow-lg shadow-blue-500/10 flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-7 h-7 text-blue-600"
+              className="w-7 h-7 text-blue-600 font-bold"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -79,8 +79,8 @@ const ResetPassword = () => {
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold mb-2 text-center">Reset Password</h1>
-        <p className="text-center text-sm text-gray-500 mb-6">
+        <h1 className="text-3xl font-black text-slate-950 mb-2 text-center">Reset Password</h1>
+        <p className="text-center text-sm text-slate-500 mb-6">
           Create a strong new password for your account.
         </p>
 
@@ -100,7 +100,7 @@ const ResetPassword = () => {
               </svg>
             </div>
             <p className="text-green-600 font-semibold text-lg">Password Reset!</p>
-            <p className="text-gray-500 text-sm text-center">
+            <p className="text-slate-500 text-sm text-center">
               Your password has been updated. Redirecting you to login…
             </p>
           </div>
@@ -157,7 +157,7 @@ const ResetPassword = () => {
 
             {/* Error message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-2xl px-4 py-3">
                 {error}
               </div>
             )}
@@ -169,7 +169,7 @@ const ResetPassword = () => {
         <div className="text-center mt-4 text-sm">
           <p>
             Remember your password?{" "}
-            <Link href="/login" className="text-blue-600 font-medium hover:underline">
+            <Link href="/login" className="text-blue-600 font-bold font-medium hover:underline">
               Login
             </Link>
           </p>

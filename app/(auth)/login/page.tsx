@@ -26,9 +26,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen center-position">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">Welcome Back</h1>
+    <div className="min-h-screen center-position px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/70 bg-white/80 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
+        <div className="mb-7 text-center">
+          <h1 className="text-3xl font-black text-slate-950">Welcome Back</h1>
+          <p className="mt-2 text-sm font-medium text-slate-500">Log in to continue the conversation.</p>
+        </div>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <AuthInput
@@ -47,13 +50,13 @@ const LoginPage = () => {
           />
           <AuthButton title="Login" />
         </form>
-        <div className="text-center mt-4 text-sm flex flex-col gap-2">
-          <Link href="/recoverAccount" className="cursor-pointer hover:underline hover:text-blue-600">Forgot Password?</Link>
+        <div className="mt-5 flex flex-col gap-2 text-center text-sm font-medium text-slate-500">
+          <Link href="/recoverAccount" className="cursor-pointer text-blue-600 hover:underline">Forgot Password?</Link>
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="text-blue-600 font-medium hover:underline"
+              className="font-bold text-blue-600 hover:underline"
             >
               Create one
             </Link>

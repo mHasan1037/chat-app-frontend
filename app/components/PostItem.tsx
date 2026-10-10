@@ -47,16 +47,21 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
 
   return (
     <>
-      <div className="bg-white border border-color rounded-lg p-4 space-y-2 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div
-            className="font-medium text-sm cursor-pointer"
-            onClick={() => router.push(`/profile/${post.author?._id}`)}
-          >
-            {post.author?.name}
+      <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-xl shadow-slate-900/5 backdrop-blur-xl">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="center-position h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 text-sm font-black text-white">
+              {post.author?.name?.charAt(0)?.toUpperCase()}
+            </div>
+            <div
+              className="cursor-pointer truncate font-bold text-slate-950 hover:text-blue-600"
+              onClick={() => router.push(`/profile/${post.author?._id}`)}
+            >
+              {post.author?.name}
+            </div>
           </div>
           {canEdit && (
-            <div className="flex gap-2">
+            <div className="flex shrink-0 gap-2">
               <button
                 className="action-btn action-btn-blue"
                 onClick={() => setIsEditOpen(true)}
@@ -73,32 +78,32 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
             </div>
           )}
         </div>
-        <p className="text-gray-800 text-sm whitespace-pre-wrap">
+        <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-700">
           {post.content}
         </p>
-        <div className="flex justify-between items-center">
-          <div className="flex gap-4 items-center">
-            <div className="flex items-center gap-0.5">
+        <div className="mt-4 flex flex-col gap-3 border-t border-slate-200/70 pt-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3 text-sm font-bold text-slate-600">
+            <div className="flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5">
               <AiFillLike
                 onClick={() => !isLiking && toggleLikeMutate(post._id)}
-                className={`cursor-pointer transition-colors ${isLiking ? "text-gray-300" : post.likedByMe ? "text-blue-600" : "text-gray-600"}`}
+                className={`cursor-pointer text-lg transition-colors ${isLiking ? "text-slate-300" : post.likedByMe ? "text-blue-600" : "text-slate-500"}`}
               />{" "}
               {post.likeCount}
             </div>
             <div
-              className="flex items-center gap-0.5 cursor-pointer"
+              className="flex cursor-pointer items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 transition hover:text-blue-600"
               onClick={() => setShowComment(!showComment)}
             >
-              <FaComment className="text-gray-600" />
+              <FaComment className="text-slate-500" />
               {post.commentCount}
             </div>
           </div>
-          <p className="text-xs text-gray-500 flex gap-2">
-            <span className="text-xs text-gray-500 capitalize">
+          <p className="flex flex-wrap gap-2 text-xs font-medium text-slate-500">
+            <span className="capitalize">
               {post.visibility}
             </span>
             {post.isEdited && (
-              <span className="text-xs text-gray-500">Edited</span>
+              <span>Edited</span>
             )}
             {new Date(post.createdAt).toLocaleString()}
           </p>

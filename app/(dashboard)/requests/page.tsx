@@ -9,24 +9,27 @@ const FriendRequests = () => {
   const { accept, decline } = useFriendRequestMutations();
   const router = useRouter();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading...</p>;
 
   return (
-    <div className="max-w-2xl mx-auto my-8 bg-white shadow-lg rounded-xl p-6">
-      <h1 className="text-xl font-bold mb-6 border-b border-color pb-3">FriendRequests</h1>
+    <div className="main-content-border">
+      <div className="border-b border-white/70 pb-4">
+        <h1 className="text-2xl font-black text-slate-950">Friend Requests</h1>
+        <p className="text-sm font-medium text-slate-500">Review who wants to connect.</p>
+      </div>
       {requests.length === 0 ? (
-        <div className="text-gray-500 text-center py-10">
+        <div className="rounded-2xl bg-white/70 py-10 text-center text-sm font-medium text-slate-500">
           You have no friend requests
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {requests.map((req: IFriendRequest) => (
             <div
-              className="flex items-center justify-between p-4 rounded-lg"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/70 p-4 shadow-sm"
               key={req._id}
             >
               <p
-                className="cursor-pointer hover:underline"
+                className="cursor-pointer font-bold text-slate-800 hover:text-blue-600"
                 onClick={() => router.push(`/profile/${req.from._id}`)}
               >
                 {req.from.name}

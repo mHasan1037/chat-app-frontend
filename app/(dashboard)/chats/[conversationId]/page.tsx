@@ -78,15 +78,15 @@ const chatPage = () => {
   const otherUser = conversation?.members?.find((m: any) => m._id !== myUserId);
 
   return (
-    <div className="flex flex-col h-[80vh] main-content-border">
+    <div className="main-content-border flex h-[78vh] max-w-3xl flex-col overflow-hidden p-0">
       <ChatHeader user={otherUser} />
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-4 space-y-2"
+        className="flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-slate-50/80 to-blue-50/60 p-4 sm:p-5"
       >
         {messagesWithIsMe.map((msg) => (
-          <ChatContent content={msg} />
+          <ChatContent key={msg._id} content={msg} />
         ))}
         <div ref={bottomRef} />
       </div>
@@ -96,3 +96,4 @@ const chatPage = () => {
 };
 
 export default chatPage;
+

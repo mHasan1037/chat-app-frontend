@@ -23,11 +23,11 @@ export default function RecoverAccount() {
   };
 
   return (
-    <div className="min-h-screen center-position">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-2 text-center">Recover Account</h1>
-        <p className="text-center text-sm text-gray-500 mb-6">
-          Enter your email and we'll send you a reset link.
+    <div className="min-h-screen center-position px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/70 bg-white/80 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
+        <h1 className="text-3xl font-black text-slate-950 mb-2 text-center">Recover Account</h1>
+        <p className="text-center text-sm text-slate-500 mb-6">
+          Enter your email and we&apos;ll send you a reset link.
         </p>
 
         <form onSubmit={handleRecover} className="flex flex-col gap-4">
@@ -46,7 +46,7 @@ export default function RecoverAccount() {
             Remember your password?{" "}
             <Link
               href="/login"
-              className="text-blue-600 font-medium hover:underline"
+              className="text-blue-600 font-bold font-medium hover:underline"
             >
               Login
             </Link>

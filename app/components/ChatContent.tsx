@@ -14,8 +14,10 @@ const ChatContent = ({ content }: ContentProps) => {
   return (
     <div
       key={content._id}
-      className={`max-w-xs p-2 rounded prose ${
-        content.isMe ? "ml-auto blue-background text-white" : "bg-gray-200"
+      className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm prose prose-sm ${
+        content.isMe
+          ? "ml-auto rounded-br-md bg-gradient-to-r from-blue-600 to-cyan-500 text-white prose-invert shadow-blue-500/20"
+          : "mr-auto rounded-bl-md border border-white/80 bg-white/90 text-slate-800 shadow-slate-900/5"
       }`}
     >
       <ReactMarkdown
