@@ -20,6 +20,8 @@ const UserProfile = () => {
   const friendMutation = useFriendMutations();
   const router = useRouter();
 
+  console.log('usersFriends', usersFriends);
+
   if (isLoading || friendsLoading) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading profile...</p>;
   if (isError || !profile) return <p className="py-10 text-center text-sm font-medium text-slate-500">User not found</p>;
   if (isPending) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading...</p>;
@@ -149,16 +151,29 @@ const UserProfile = () => {
         )}
         {usersFriends?.length !== 0 && (
           <div className="mt-6 border-t border-slate-200/80 pt-5">
-            <h1 className="mb-3 text-sm font-black uppercase tracking-wide text-slate-500">Friends</h1>
+            <h1 className="mb-3 text-sm font-black uppercase tracking-wide text-slate-500">
+              Friends
+            </h1>
             <div className="space-y-2">
               {usersFriends?.map((friend) => (
                 <div key={friend._id}>
-                  <p
-                    className="cursor-pointer truncate rounded-xl px-3 py-2 font-semibold text-slate-700 transition hover:bg-white hover:text-blue-600"
+                  <div
+                    className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 font-semibold text-slate-700 transition hover:bg-white hover:text-blue-600"
                     onClick={() => handleFriendProfile(friend._id)}
                   >
-                    {friend.name}
-                  </p>
+                    <div className="center-position h-8 w-8 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-blue-600 to-cyan-400 text-xs font-black text-white">
+                      {friend.profilePicture ? (
+                        <img
+                          src={friend.profilePicture}
+                          alt={friend.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        friend.name?.charAt(0)?.toUpperCase()
+                      )}
+                    </div>
+                    <p className="truncate">{friend.name}</p>
+                  </div>
                 </div>
               ))}
             </div>
