@@ -7,7 +7,7 @@ interface ContentProps {
     _id: string;
     isMe: boolean;
     content: string;
-    sender: {
+    sender?: {
       _id: string;
       name: string;
       profilePicture?: string;
@@ -16,7 +16,6 @@ interface ContentProps {
 }
 
 const ChatContent = ({ content }: ContentProps) => {
-  console.log("content", content);
   return (
     <div
       key={content._id}
@@ -31,7 +30,7 @@ const ChatContent = ({ content }: ContentProps) => {
           {content.sender?.profilePicture ? (
             <img
               src={content.sender.profilePicture}
-              alt={content.sender.name}
+              alt={content.sender.name ?? "U"}
               className="h-full w-full object-cover"
             />
           ) : (
