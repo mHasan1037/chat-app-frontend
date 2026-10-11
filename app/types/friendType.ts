@@ -1,7 +1,8 @@
 export interface IFriendType{
     _id: string;
     name: string;
-    email: string
+    email: string;
+    profilePicture?: string;
 };
 
 export interface IFriendRequest{
@@ -19,6 +20,7 @@ export interface IUserSearchResult{
     _id: string;
     name: string;
     email: string;
+    profilePicture?: string;
     isFriend: boolean;
     isIncomingRequest: boolean;
     isOutgoingRequest: boolean;

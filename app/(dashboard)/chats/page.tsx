@@ -63,11 +63,22 @@ const ChatPage = () => {
                 className="group flex cursor-pointer items-center gap-3 px-5 py-4 transition hover:bg-white/85"
                 onClick={() => router.push(`/chats/${chat._id}`)}
               >
-                <div className="center-position h-12 w-12 shrink-0 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 text-base font-black text-white shadow-lg shadow-blue-500/20">
-                  {otherUser?.name?.charAt(0)?.toUpperCase() ?? "A"}
+                <div className="center-position h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 text-base font-black text-white shadow-lg shadow-blue-500/20">
+                  {otherUser?.profilePicture ? (
+                    <img
+                      src={otherUser.profilePicture}
+                      alt={otherUser.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    (otherUser?.name?.charAt(0)?.toUpperCase() ?? "A")
+                  )}
                 </div>
+
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-bold text-slate-950 group-hover:text-blue-700">{otherUser?.name}</p>
+                  <p className="truncate font-bold text-slate-950 group-hover:text-blue-700">
+                    {otherUser?.name}
+                  </p>
                   <p className="truncate text-sm font-medium text-slate-500">
                     {chat.lastMessage
                       ? lastSenderIsMe

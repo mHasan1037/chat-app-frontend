@@ -50,8 +50,16 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
       <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-xl shadow-slate-900/5 backdrop-blur-xl">
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="center-position h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 text-sm font-black text-white">
-              {post.author?.name?.charAt(0)?.toUpperCase()}
+            <div className="center-position h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 text-sm font-black text-white">
+              {post.author?.profilePicture ? (
+                <img
+                  src={post.author.profilePicture}
+                  alt={post.author.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                post.author?.name?.charAt(0)?.toUpperCase()
+              )}
             </div>
             <div
               className="cursor-pointer truncate font-bold text-slate-950 hover:text-blue-600"
@@ -99,12 +107,8 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
             </div>
           </div>
           <p className="flex flex-wrap gap-2 text-xs font-medium text-slate-500">
-            <span className="capitalize">
-              {post.visibility}
-            </span>
-            {post.isEdited && (
-              <span>Edited</span>
-            )}
+            <span className="capitalize">{post.visibility}</span>
+            {post.isEdited && <span>Edited</span>}
             {new Date(post.createdAt).toLocaleString()}
           </p>
         </div>

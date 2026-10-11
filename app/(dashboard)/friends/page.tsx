@@ -38,7 +38,9 @@ const FriendPage = () => {
 
       {query.trim() ? (
         searchResults.length === 0 ? (
-          <p className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">No results found</p>
+          <p className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">
+            No results found
+          </p>
         ) : (
           <RandomUsers
             users={searchResults}
@@ -49,7 +51,9 @@ const FriendPage = () => {
       ) : friendsLoading ? (
         <p className="text-sm font-medium text-slate-500">Loading friends...</p>
       ) : friends.length === 0 ? (
-        <div className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">You have no friends.</div>
+        <div className="rounded-2xl bg-white/70 p-5 text-center text-sm font-medium text-slate-500">
+          You have no friends.
+        </div>
       ) : (
         <div className="space-y-3">
           {friends.map((friend) => (
@@ -58,8 +62,16 @@ const FriendPage = () => {
               className="flex items-center justify-between gap-3 rounded-2xl border border-white/70 bg-white/70 p-3 shadow-sm transition hover:bg-white"
             >
               <div className="flex min-w-0 items-center gap-3">
-                <div className="center-position h-12 w-12 shrink-0 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 text-base font-black text-white shadow-lg shadow-blue-500/20">
-                  {friend.name?.charAt(0)?.toUpperCase()}
+                <div className="center-position h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 text-base font-black text-white shadow-lg shadow-blue-500/20">
+                  {friend.profilePicture ? (
+                    <img
+                      src={friend.profilePicture}
+                      alt={friend.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    friend.name?.charAt(0)?.toUpperCase()
+                  )}
                 </div>
                 <p
                   onClick={() => handleFriendProfile(friend._id)}
