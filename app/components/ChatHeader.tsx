@@ -7,6 +7,7 @@ interface ChatHeaderProps {
   user: {
     _id?: string;
     name: string;
+    profilePicture?: string;
   };
 }
 
@@ -19,12 +20,23 @@ const ChatHeader = ({ user }: ChatHeaderProps) => {
           <FaArrowLeft onClick={() => router.back()} />
         </button>
         <div
-          className="cursor-pointer"
+          className="flex cursor-pointer items-center gap-3"
           onClick={() => {
             if (user._id) router.push(`/profile/${user._id}`);
           }}
         >
-          <h3 className="font-bold text-slate-950">{user?.name}</h3>
+          <div className="center-position h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 text-sm font-black text-white">
+            {user?.profilePicture ? (
+              <img
+                src={user.profilePicture}
+                alt={user.name}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              user?.name?.charAt(0)?.toUpperCase()
+            )}
+          </div>
+          <h3 className="truncate font-bold text-slate-950">{user?.name}</h3>
         </div>
       </div>
       {user?._id && (
