@@ -27,7 +27,6 @@ const FriendPage = () => {
     <div className="main-content-border">
       <div>
         <h1 className="text-2xl font-black text-slate-950">Connections</h1>
-        <p className="text-sm font-medium text-slate-500">Search, message, and manage your friends.</p>
       </div>
       <input
         type="text"
