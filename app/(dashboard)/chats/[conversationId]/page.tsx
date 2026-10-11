@@ -26,6 +26,7 @@ const chatPage = () => {
     isMe: msg.sender._id === myUserId,
   }));
 
+
   const handleScroll = () => {
     if (!containerRef.current) return;
 

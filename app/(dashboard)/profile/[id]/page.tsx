@@ -20,8 +20,6 @@ const UserProfile = () => {
   const friendMutation = useFriendMutations();
   const router = useRouter();
 
-  console.log('usersFriends', usersFriends);
-
   if (isLoading || friendsLoading) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading profile...</p>;
   if (isError || !profile) return <p className="py-10 text-center text-sm font-medium text-slate-500">User not found</p>;
   if (isPending) return <p className="py-10 text-center text-sm font-medium text-slate-500">Loading...</p>;

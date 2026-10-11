@@ -63,7 +63,7 @@ const Comments = ({ postId }: CommentsProps) => {
       {allComments?.pages.map((page) =>
         page.comments.map((c: any) => {
           const isEditing = editingCommentId === c._id;
-
+          console.log("comment", c);
           return (
             <div
               key={c._id}
@@ -80,9 +80,23 @@ const Comments = ({ postId }: CommentsProps) => {
                 </div>
               ) : (
                 <>
-                  <p className="w-[97%] rounded-2xl bg-white px-3 py-2 leading-6 text-slate-700 shadow-sm">
-                    <b className="text-slate-950">{c.author.name}</b>: {c.content}
-                  </p>
+                  <div className="flex w-[97%] items-start gap-3 rounded-2xl bg-white px-3 py-2 shadow-sm">
+                    <div className="center-position h-6 w-6 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-blue-600 to-cyan-400 text-xs font-black text-white">
+                      {c.author?.profilePicture ? (
+                        <img
+                          src={c.author.profilePicture}
+                          alt={c.author.name}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        c.author?.name?.charAt(0)?.toUpperCase()
+                      )}
+                    </div>
+                    <p className="min-w-0 break-words leading-6 text-slate-700">
+                      <b className="text-slate-950">{c.author?.name}</b>:{" "}
+                      {c.content}
+                    </p>
+                  </div>
                   {myUserId === c.author._id && (
                     <ActionDropdown
                       itemId={c._id}
