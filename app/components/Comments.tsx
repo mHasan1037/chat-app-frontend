@@ -103,33 +103,35 @@ const Comments = ({ postId }: CommentsProps) => {
                       {c.content}
                     </p>
                   </div>
-                  {myUserId === c.author._id && (
-                    <ActionDropdown
-                      itemId={c._id}
-                      openId={openCommentActionId}
-                      setOpenId={setOpenCommentActionId}
-                      actions={[
-                        {
-                          label: "Edit",
-                          onClick: () => {
-                            handleCommentEdit(c._id, c.content);
-                            setOpenCommentActionId(null);
+                  <div className="w-[3%]">
+                    {myUserId === c.author._id && (
+                      <ActionDropdown
+                        itemId={c._id}
+                        openId={openCommentActionId}
+                        setOpenId={setOpenCommentActionId}
+                        actions={[
+                          {
+                            label: "Edit",
+                            onClick: () => {
+                              handleCommentEdit(c._id, c.content);
+                              setOpenCommentActionId(null);
+                            },
                           },
-                        },
-                        {
-                          label: "Delete",
-                          onClick: () => {
-                            deleteComment(c._id);
-                            setOpenCommentActionId(null);
+                          {
+                            label: "Delete",
+                            onClick: () => {
+                              deleteComment(c._id);
+                              setOpenCommentActionId(null);
+                            },
                           },
-                        },
-                      ]}
-                      className={{
-                        container:
-                          "rounded-full p-1 text-slate-400 opacity-0 transition hover:bg-white hover:text-slate-700 group-hover:opacity-100 cursor-pointer",
-                      }}
-                    />
-                  )}
+                        ]}
+                        className={{
+                          container:
+                            "h-6 w-6 rounded-full p-1 text-slate-400 opacity-0 transition hover:bg-white hover:text-slate-700 group-hover:opacity-100 cursor-pointer",
+                        }}
+                      />
+                    )}
+                  </div>
                 </>
               )}
             </div>
