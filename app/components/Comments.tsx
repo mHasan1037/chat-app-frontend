@@ -26,6 +26,8 @@ const Comments = ({ postId }: CommentsProps) => {
     null,
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const postOwnerId = allComments?.pages[0]?.postOwnerId;
+  const isPostOwner = !!myUserId && myUserId === postOwnerId;
 
   useClickOutside(dropdownRef, () => setOpenCommentActionId(null));
 
@@ -64,7 +66,30 @@ const Comments = ({ postId }: CommentsProps) => {
       {allComments?.pages.map((page) =>
         page.comments.map((c: any) => {
           const isEditing = editingCommentId === c._id;
-          console.log("comment", c);
+          const isCommentAuthor = myUserId === c.author?._id;
+          const canEdit = isCommentAuthor;
+          const canDelete = isCommentAuthor || isPostOwner;
+          const actions = [
+            ...(canEdit
+              ? [
+                  {
+                    label: "Edit",
+                    onClick: () => handleCommentEdit(c._id, c.content),
+                  },
+                ]
+              : []),
+            ...(canDelete
+              ? [
+                  {
+                    label: "Delete",
+                    onClick: () => {
+                      deleteComment(c._id);
+                      setOpenCommentActionId(null);
+                    },
+                  },
+                ]
+              : []),
+          ];
           return (
             <div
               key={c._id}
@@ -104,27 +129,12 @@ const Comments = ({ postId }: CommentsProps) => {
                     </p>
                   </div>
                   <div className="w-[3%]">
-                    {myUserId === c.author._id && (
+                    {actions.length > 0 && (
                       <ActionDropdown
                         itemId={c._id}
                         openId={openCommentActionId}
                         setOpenId={setOpenCommentActionId}
-                        actions={[
-                          {
-                            label: "Edit",
-                            onClick: () => {
-                              handleCommentEdit(c._id, c.content);
-                              setOpenCommentActionId(null);
-                            },
-                          },
-                          {
-                            label: "Delete",
-                            onClick: () => {
-                              deleteComment(c._id);
-                              setOpenCommentActionId(null);
-                            },
-                          },
-                        ]}
+                        actions={actions}
                         className={{
                           container:
                             "h-6 w-6 rounded-full p-1 text-slate-400 opacity-0 transition hover:bg-white hover:text-slate-700 group-hover:opacity-100 cursor-pointer",
