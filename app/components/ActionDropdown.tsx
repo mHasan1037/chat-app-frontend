@@ -41,7 +41,7 @@ const ActionDropdown: React.FC<ActionDropdownProps> = ({
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 bottom-full z-50 mb-2 overflow-hidden rounded-xl border border-white/70 bg-white/95 shadow-xl shadow-slate-900/10 backdrop-blur-xl"
+          className="absolute right-0 top-10 z-50 mb-2 overflow-hidden rounded-xl border border-white/70 bg-white/95 shadow-xl shadow-slate-900/10 backdrop-blur-xl"
         >
           {actions.map((action, idx) => (
             <button

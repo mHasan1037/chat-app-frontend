@@ -47,7 +47,7 @@ const PostItem = ({ post, canEdit = false }: PostItemProps) => {
 
   return (
     <>
-      <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-xl shadow-slate-900/5 backdrop-blur-xl">
+      <div className="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-xl shadow-slate-900/5">
         <div className="flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
             <div className="center-position h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 text-sm font-black text-white">
