@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 
 export default function RecoverAccount() {
   const [email, setEmail] = useState("");
+  const [isloading, setIsLoading] = useState(false);
 
   const handleRecover = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await sendResetPasswordEmail(email);
       setEmail("");
@@ -19,6 +21,8 @@ export default function RecoverAccount() {
     } catch (err: any) {
       const message = err?.response?.data?.message || "Something went wrong. Try again.";
       toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -38,7 +42,7 @@ export default function RecoverAccount() {
             onChange={setEmail}
             placeholder="Enter your email"
           />
-          <AuthButton title="Send Reset Link" />
+          <AuthButton title="Send Reset Link" loading={isloading} />
         </form>
 
         <div className="text-center mt-4 text-sm">

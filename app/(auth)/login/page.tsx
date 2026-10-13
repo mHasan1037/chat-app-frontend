@@ -10,10 +10,13 @@ import { useRouter } from "next/navigation";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(isLoading) return;
+    setIsLoading(true);
 
     try {
       const data = await loginUser({ email, password });
@@ -22,6 +25,8 @@ const LoginPage = () => {
     } catch (error: any) {
       console.log(error.response?.data?.message);
       toast.info("Incorrect information");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -48,7 +53,7 @@ const LoginPage = () => {
             onChange={setPassword}
             placeholder="Enter your password"
           />
-          <AuthButton title="Login" />
+          <AuthButton title="Login" loading={isLoading} />
         </form>
         <div className="mt-5 flex flex-col gap-2 text-center text-sm font-medium text-slate-500">
           <Link href="/recoverAccount" className="cursor-pointer text-blue-600 hover:underline">Forgot Password?</Link>

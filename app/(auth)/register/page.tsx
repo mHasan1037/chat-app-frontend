@@ -12,16 +12,20 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setIsLoading(true);
+
     try{
       const data = await registerUser({name, email, password});
       localStorage.setItem('token', data.token);
       router.push('/chats')
     }catch(error: any){
       console.log(error.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +57,7 @@ const RegisterPage = () => {
             onChange={setPassword}
             placeholder="Choose a strong password"
           />
-          <AuthButton title="Sign up" />
+          <AuthButton title="Sign up" loading={isLoading} />
         </form>
         <p className="mt-5 text-center text-sm font-medium text-slate-500">
           Already have an account? <Link href="/login" className="font-bold text-blue-600 hover:underline">Login</Link>

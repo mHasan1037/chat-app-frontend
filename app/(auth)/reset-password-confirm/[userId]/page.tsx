@@ -162,7 +162,7 @@ const ResetPassword = () => {
               </div>
             )}
 
-            <AuthButton title={loading ? "Resetting…" : "Reset Password"} />
+            <AuthButton title={"Reset Password"} loading={loading}/>
           </form>
         )}
 
