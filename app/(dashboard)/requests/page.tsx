@@ -15,7 +15,6 @@ const FriendRequests = () => {
     <div className="main-content-border">
       <div className="border-b border-white/70 pb-4">
         <h1 className="text-2xl font-black text-slate-950">Friend Requests</h1>
-        <p className="text-sm font-medium text-slate-500">Review who wants to connect.</p>
       </div>
       {requests.length === 0 ? (
         <div className="rounded-2xl bg-white/70 py-10 text-center text-sm font-medium text-slate-500">
