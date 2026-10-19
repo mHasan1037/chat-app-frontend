@@ -3,33 +3,54 @@ import ChatContent from "@/app/components/ChatContent";
 import ChatHeader from "@/app/components/ChatHeader";
 import ChatInput from "@/app/components/ChatInput";
 import { useAIChat } from "@/app/hooks/useAIChat";
+import { isAxiosError } from "axios";
 import React, { useState } from "react";
+
+type ChatMessage = {
+  role: 'user' | 'assistant';
+  content: string;
+  isSystem?: boolean;
+};
 
 const AIChat = () => {
   const [messages, setMessages] = useState<any[]>([]);
+  const [dailyLimitReached, setDailyLimitReached] = useState(false);
   const { mutateAsync, isPending } = useAIChat();
 
+  const addNotice = (content: string) =>
+    setMessages((prev) => [...prev, { role: "assistant", content, isSystem: true }]);
+
   const handleSendMessage = async (text: string) => {
-    const updatedMessage = [...messages, { role: "user", content: text }];
-    setMessages(updatedMessage);
+    const apiMessages = [
+      ...messages.filter((m) => !m.isSystem),
+      { role: "user" as const, content: text },
+    ].map(({ role, content }) => ({ role, content }));
+
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
 
     try {
-      const res = await mutateAsync(updatedMessage);
+      const res = await mutateAsync(apiMessages);
 
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: res.reply },
       ]);
     } catch (error: any) {
-      console.error("AI request failed", error);
+      if (isAxiosError(error) && error.response?.status === 429) {
+        const { code, error: message } = error.response.data ?? {};
 
-      setMessages((prev) =>[
-        ...prev,
-        {
-          role: "assistant",
-          content: "⚠️ AI service is currently unavailable. The developer doesn’t have money to pay for an AI model."
+        if (code === "DAILY_LIMIT_REACHED") {
+          setDailyLimitReached(true);
+          addNotice(message ?? "You've finished your daily chat limit. Please come back tomorrow.");
+        } else {
+          // RATE_LIMITED (burst): temporary, so don't lock the input
+          addNotice(message ?? "You're sending messages too fast. Please wait a moment.");
         }
-      ])
+        return;
+      }
+
+      console.error("AI request failed", error);
+      addNotice("⚠️ AI service is currently unavailable. The developer doesn't have money to pay for an AI model.");
     }
   };
 
@@ -37,6 +58,7 @@ const AIChat = () => {
     _id: String(i),
     isMe: m.role === "user",
     content: m.content,
+    isNotice: m.isSystem ?? false,
   }));
 
   return (
@@ -52,7 +74,7 @@ const AIChat = () => {
           </div>
         )}
       </div>
-      <ChatInput onSend={handleSendMessage} />
+      <ChatInput onSend={handleSendMessage} disabled={dailyLimitReached || isPending} />
     </div>
   );
 };

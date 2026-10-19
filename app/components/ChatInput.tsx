@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
+  disabled?: boolean;
 }
 
-const ChatInput = ({ onSend }: ChatInputProps) => {
+const ChatInput = ({ onSend, disabled = false }: ChatInputProps) => {
   const [text, setText] = useState("");
 
   const handleSend = () => {
+    if (disabled) return;
     if (!text.trim()) return;
     onSend(text);
     setText("");
@@ -25,11 +27,12 @@ const ChatInput = ({ onSend }: ChatInputProps) => {
             handleSend();
           }
         }}
+        disabled={disabled}
         placeholder="Type a message"
       />
       <button
         onClick={handleSend}
-        className="btn-primary rounded-full px-5 text-sm font-bold"
+        className={`btn-primary rounded-full px-5 text-sm font-bold ${disabled && 'cursor-not-allowed opacity-50'}`}
       >
         Send
       </button>
