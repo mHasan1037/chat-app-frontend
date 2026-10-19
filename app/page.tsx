@@ -1,9 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useAuthUser } from "./hooks/useAuthUser";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const { data, isLoading } = useAuthUser();
+
+  useEffect(() => {
+    if (data) router.replace("/chats");
+  }, [data, router]);
+
+  if (isLoading || data) return null;
+  
   const handleClick = (page: string) => {
     router.push(page);
   };
@@ -12,7 +22,9 @@ export default function Home() {
     <div className="min-h-screen center-position px-4">
       <div className="w-full max-w-md overflow-hidden rounded-3xl border border-white/70 bg-white/80 p-8 text-center shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
         <div className="mx-auto mb-6 h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-400 shadow-xl shadow-blue-500/25" />
-        <h1 className="mb-3 text-4xl font-black tracking-normal text-slate-950">Chat Time</h1>
+        <h1 className="mb-3 text-4xl font-black tracking-normal text-slate-950">
+          Chat Time
+        </h1>
         <p className="mb-8 text-sm font-medium leading-6 text-slate-500">
           Connect with friends and start chatting instantly
         </p>

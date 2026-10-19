@@ -15,12 +15,22 @@ const LoginPage = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(isLoading) return;
+    if (isLoading) return;
     setIsLoading(true);
 
+    const fields = [
+      { value: email.trim(), message: "Please enter your email" },
+      { value: password, message: "Please enter your password" },
+    ];
+
+    const missing = fields.find((f) => !f.value);
+    if (missing) {
+      toast.info(missing.message);
+      return;
+    }
+
     try {
-      const data = await loginUser({ email, password });
-      localStorage.setItem("token", data.token);
+      loginUser({ email, password });
       router.push("/chats");
     } catch (error: any) {
       console.log(error.response?.data?.message);

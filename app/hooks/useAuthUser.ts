@@ -10,6 +10,7 @@ export const useAuthUser = () =>{
     return useQuery({
         queryKey: ["auth-user"],
         queryFn: fetchMe,
-        staleTime: Infinity
+        staleTime: Infinity,
+        retry: false,
     })
 };

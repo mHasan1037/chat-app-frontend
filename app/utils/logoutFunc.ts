@@ -1,6 +1,11 @@
-export const logout = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("token");
+import api from "./api";
+
+export const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch (error) {
+    console.error("Logout failed", error);
+  } finally {
+    window.location.href = "/login";
   }
-  window.location.href = "/login";
 };
