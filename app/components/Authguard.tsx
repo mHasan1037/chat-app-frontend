@@ -1,23 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const Authguard = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const [checked, setChecked] = useState(false);
+  const { data, isLoading, isError } = useAuthUser();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    if (isError) router.replace("/login");
+  }, [isError, router]);
 
-    if (!token) {
-      router.replace("/login");
-      return;
-    }
-    setChecked(true);
-  }, [router]);
-
-  if (!checked) return null;
+  if (isLoading || !data) return null;
   return <>{children}</>;
 };
 

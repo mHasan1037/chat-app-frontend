@@ -6,6 +6,7 @@ import { registerUser } from "@/app/services/authService";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -18,11 +19,23 @@ const RegisterPage = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    try{
-      const data = await registerUser({name, email, password});
-      localStorage.setItem('token', data.token);
-      router.push('/chats')
-    }catch(error: any){
+    const fields = [
+      { value: name.trim(), message: "Please enter your name" },
+      { value: email.trim(), message: "Please enter your email" },
+      { value: password, message: "Please enter your password" },
+    ];
+
+    const missing = fields.find((f) => !f.value);
+    if (missing) {
+      toast.info(missing.message);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      registerUser({ name, email, password });
+      router.push("/chats");
+    } catch (error: any) {
       console.log(error.response?.data?.message);
     } finally {
       setIsLoading(false);
