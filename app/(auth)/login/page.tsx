@@ -16,7 +16,6 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLoading) return;
-    setIsLoading(true);
 
     const fields = [
       { value: email.trim(), message: "Please enter your email" },
@@ -29,9 +28,12 @@ const LoginPage = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      loginUser({ email, password });
+      await loginUser({ email, password });
       router.push("/chats");
+      router.refresh();
     } catch (error: any) {
       console.log(error.response?.data?.message);
       toast.info("Incorrect information");

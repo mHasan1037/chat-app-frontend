@@ -13,7 +13,7 @@ export const loginUser = async (data: {
     email: string;
     password: string;
 }) =>{
-    const res = await api.post('/auth/login', data);
+    const res = await api.post('/auth/login', data, { withCredentials: true });
     return res.data
 ;}
 
