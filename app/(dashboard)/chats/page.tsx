@@ -7,47 +7,60 @@ import React, { useEffect, useState } from "react";
 
 const ChatPage = () => {
   const [chats, setChats] = useState<any[]>([]);
+  const [chatsLoading, setChatsLoading] = useState(true);
   const router = useRouter();
-  const myUserId = useAuthUser().data?._id;
+  const { data: authUser, isLoading: authLoading } = useAuthUser();
+  const myUserId = authUser?._id;
 
   useEffect(() => {
     if (!myUserId) return;
 
     const socket = getSocket();
 
-    socket.on("connect", () => {
+    const handleConnect = () => {
       console.log("🟢 client socket connected:", socket.id);
-    });
-
-    socket.emit("joinUser", myUserId);
-
-    getAllConversations().then(setChats);
+    };
 
     const handleConversationUpdated = (updatedChat: any) => {
+      console.log("📥 conversationUpdated received:", updatedChat);
       setChats((prev) => {
         const filtered = prev.filter((c) => c._id !== updatedChat._id);
         return [updatedChat, ...filtered];
       });
     };
 
+    socket.on("connect", handleConnect);
     socket.on("conversationUpdated", handleConversationUpdated);
+    socket.emit("joinUser", myUserId);
 
-    socket.on("conversationUpdated", (data) => {
-      console.log("📥 conversationUpdated received:", data);
-    });
+    setChatsLoading(true);
+    getAllConversations()
+      .then(setChats)
+      .catch((err) => console.error("Failed to load conversations:", err))
+      .finally(() => setChatsLoading(false));
 
     return () => {
+      socket.off("connect", handleConnect);
       socket.off("conversationUpdated", handleConversationUpdated);
     };
   }, [myUserId]);
+
+  const showLoader = authLoading || (!!myUserId && chatsLoading);
 
   return (
     <div className="main-content-border overflow-hidden p-0">
       <div className="border-b border-white/70 bg-white/65 px-5 py-4">
         <h1 className="text-2xl font-black text-slate-950">Chats</h1>
       </div>
-      {chats.length === 0 ? (
-        <div className="px-5 py-14 text-center text-sm font-medium text-slate-500">No conversations found.</div>
+      {showLoader ? (
+        <div className="flex items-center justify-center gap-3 px-5 py-14 text-sm font-medium text-slate-500">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600" />
+          Loading chats...
+        </div>
+      ) : chats.length === 0 ? (
+        <div className="px-5 py-14 text-center text-sm font-medium text-slate-500">
+          No conversations found.
+        </div>
       ) : (
         <div className="divide-y divide-slate-200/70">
           {chats.map((chat) => {
